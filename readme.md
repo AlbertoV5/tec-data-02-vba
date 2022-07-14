@@ -99,6 +99,15 @@ tickers(2) = "DQ"
 ```
 
 
+## Strings
+
+Concatenating strings.
+
+```vba
+Range("A1").Value = "All Stocks (" + yearValue + ")"
+```
+
+
 # Keywords and Operators
 
 Here is some syntax reference for the common keywords in VBA:
@@ -126,11 +135,26 @@ Not equal operator.
 Cells(i - 1, 1).Value <> "DQ"
 ```
 
-And.
+And keyword.
 
 ```vba
 If Cells(i, 1).Value = "DQ" And Cells(i - 1, 1).Value <> "DQ" Then
     'set starting price
+End If
+```
+
+ElseIf.
+
+```vba
+If Cells(4, 3) > 0 Then
+    'Color the cell green
+    Cells(4, 3).Interior.Color = vbGreen
+ElseIf Cells(4, 3) < 0 Then
+    'Color the cell red
+    Cells(4, 3).Interior.Color = vbRed
+Else
+    'Clear the cell color
+    Cells(4, 3).Interior.Color = xlNone
 End If
 ```
 
@@ -188,6 +212,14 @@ Digits of Precision.
 |------------------- |---------- |
 | &ldquo;0.0%&rdquo;  | one digit  |
 | &ldquo;0.00%&rdquo; | two digits |
+
+Colors.
+
+```vba
+Cells(4, 3).Interior.Color = vbGreen
+Cells(4, 3).Interior.Color = vbRed
+Cells(4, 3).Interior.Color = xlNone
+```
 
 
 # Design Patterns
@@ -259,6 +291,17 @@ Cells(3, 3).Value = "Return"
 It&rsquo;s a good idea to execute the macro everytime we complete a step and even make a commit to our repository to keep track of our progress and versions of our code.
 
 Luckily, Excel can help us find problems in our code with its debugging tools. It&rsquo;s also not a bad idea to `google` the error messages to see possible solutions in case we don&rsquo;t see it right away.
+
+
+# Running Macros with Buttons
+
+Go to `Developer=>Button=>Select Area in worksheet=>Select your Macro`. Then you can edit your button name, look and feel, and then test it by clicking it.
+
+Using user input.
+
+```vba
+yearValue = InputBox("What year would you like to run the analysis on?")
+```
 
 ## Footnotes
 
