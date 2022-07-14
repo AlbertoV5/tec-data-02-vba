@@ -1,13 +1,13 @@
-|                                                           |                          |                          |                                     |
-|---------------------------------------------------------- |------------------------- |------------------------- |------------------------------------ |
-| [<<<Home](https://albertov5.github.io/tec-data/index.html) | [Lesson-1](./lesson-1.md) | [Lesson-2](./lesson-2.md) | [Challenge>>](./challenge/readme.md) |
+|                                                           |                          |                          |                                      |
+|---------------------------------------------------------- |------------------------- |------------------------- |------------------------------------- |
+| [<<<Home](https://albertov5.github.io/tec-data/index.html) | [Lesson-1](./lesson-1.md) | [Lesson-2](./lesson-2.md) | [Challenge>>>](./challenge/readme.md) |
 
 
 # Introduction
 
 Excel uses a scripting language to create its macros, it lives inside VBA and the execution is reserved to Office software. The code can be written in any other editor but Excel has a Development Environment that supports running the scripts directly inside it and they afftect the current work sheet.
 
-Macros are `Sub` (Subroutines) that can be called by name from the spreadsheet after enabling macros. This is an example of a macro that will print out the values in Cells (1, 1) to (1, 8).
+Macros are Subroutines (`Sub`) that can be called by name from the spreadsheet after enabling macros. This is an example of a macro that will print out the values in Cells (1, 1) to (1, 8).
 
 ```vba
 Sub DQAnalysis()
@@ -78,6 +78,27 @@ Dim my_object As Object
 `Object` does not contain the data value itself, as it&rsquo;s a pointer to that value. <sup><a id="fnr.2" class="footref" href="#fn.2" role="doc-backlink">2</a></sup> So it always uses the same space in memory. It&rsquo;s recommended to always define a variable by a specific type rather than trying to point to it at runtime.
 
 
+## Arrays
+
+Arrays hold an arbitrary number of variables of the same type. Instead of creating many variables that share a type, we can create an array.
+
+We index arrays with an integer `i`. Arrays in VBA are zero-based.
+
+Declaring arrays.
+
+```vba
+Dim tickers(11) As String
+```
+
+Accessing arrays.
+
+```vba
+tickers(0) = "AY"
+tickers(1) = "CSIQ"
+tickers(2) = "DQ"
+```
+
+
 # Keywords and Operators
 
 Here is some syntax reference for the common keywords in VBA:
@@ -85,14 +106,38 @@ Here is some syntax reference for the common keywords in VBA:
 
 ## Conditional
 
+If, Then.
+
 ```vba
 If 3 > 2 Then
     ' Code here
 End If
 ```
 
+Equal operator.
+
+```vba
+Cells(i, 1).Value = "DQ"
+```
+
+Not equal operator.
+
+```vba
+Cells(i - 1, 1).Value <> "DQ"
+```
+
+And.
+
+```vba
+If Cells(i, 1).Value = "DQ" And Cells(i - 1, 1).Value <> "DQ" Then
+    'set starting price
+End If
+```
+
 
 ## Loops
+
+For loop.
 
 ```vba
 For i = 1 To 10
@@ -100,8 +145,123 @@ For i = 1 To 10
 Next i
 ```
 
+Nested loops.
+
+```vba
+For i = 1 To 10
+    ' code here
+    For j = 1 to 20
+        ' code here
+    Next j
+Next i
+```
+
+Accessing arrays in loops.
+
+```vba
+For i = 0 To 11
+    ticker = tickers(i)
+    ' Do stuff with ticker
+Next i
+```
+
+
+## Visual Style Formatting
+
+Styling.
+
+```vba
+Range("A3:C3").Font.Bold = True
+Columns("B").AutoFit
+```
+
+Number Formatting.
+
+```vba
+Range("B4:B15").NumberFormat = "#,##0"
+Range("C4:C15").NumberFormat = "0.0%"
+```
+
+Digits of Precision.
+
+| Format              | Precision  |
+|------------------- |---------- |
+| &ldquo;0.0%&rdquo;  | one digit  |
+| &ldquo;0.00%&rdquo; | two digits |
+
+
+# Design Patterns
+
+Patterns can be expressed as pseudocode, which means that we are only describing what the process looks like once we generalize it.
+
+A good way to find them is to create a few cases by hand first and see if a pattern arises once we see them side by side. For example:
+
+| Cases  | input | output |
+|------ |----- |------ |
+| Case 1 | 1     | 4      |
+| Case 2 | 2     | 2      |
+| Case 3 | 3     | 1.25   |
+| Case 4 | 4     | 1      |
+
+We can then assume that our output will be `output = 4/input`. So the pattern will be:
+
+```vba
+Sub DivBy4()
+    For i = 1 To 10
+        Cells(i, 2).Value = 4 / Cells(i, 1).Value
+    Next i
+End Sub
+```
+
+The code will give us the result of any input we give it. So the value of cell 2 will be equal to 4 divided by the value of cell 1. This way we can operate in any number of cases. It&rsquo;s good to always test for outlier cases as our design needs to cover them too. For example, `we have to check that the input is not zero`.
+
+Once our design is solid, we can reuse the code in other applications as long as it fits them. The more cases it can cover, the better.
+
+
+# Research
+
+Another way to iterate over our design patterns is to look for answers that other people have come up with or simply look at the documentation for a better understanding of the features and rules of the programming language.
+
+For example, we wouldn&rsquo;t be able to know what `xlUp` does without looking at the documentation or getting that information from a quick google search.
+
+```vba
+rowEnd = Cells(Rows.Count, "A").End(xlUp).Row
+```
+
+
+# Developing a Macro
+
+In order to create a proper algorithm/design, we will map out a plan of what we need to execute. Let&rsquo;s write down the an example of a general objective and then go step by step:
+
+1.  Format our working sheet with headers.
+2.  Initialize an array of existing items.
+3.  Initialize variables based on our data.
+4.  Initialize output variables with no value yet.
+5.  Loop through our data.
+6.  Write down the results
+
+We have to translate that pseudocode into actual code, so now we go step by step. For the sake of simplicity, we will only visit the first step:
+
+1.  Format our working sheet with headers:
+
+```vba
+Worksheets("All Stocks Analysis").Activate
+Range("A1").Value = "All Stocks (2018)"
+
+Cells(3, 1).Value = "Ticker"
+Cells(3, 2).Value = "Total Daily Volume"
+Cells(3, 3).Value = "Return"
+```
+
+
+# Debugging Code
+
+It&rsquo;s a good idea to execute the macro everytime we complete a step and even make a commit to our repository to keep track of our progress and versions of our code.
+
+Luckily, Excel can help us find problems in our code with its debugging tools. It&rsquo;s also not a bad idea to `google` the error messages to see possible solutions in case we don&rsquo;t see it right away.
+
 ## Footnotes
 
 <sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <https://docs.microsoft.com/en-us/office/vba/api/overview/excel/graph-visual-basic-reference>
 
-<sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <https://en.wikipedia.org/wiki/Pointer_(computer_programming)>
+<sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <https://en.wikipediarg/wiki/Pointer_(computer_programming)>
