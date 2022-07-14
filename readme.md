@@ -9,7 +9,7 @@ Excel uses a scripting language to create its macros, it lives inside VBA and th
 
 Macros are Subroutines (`Sub`) that can be called by name from the spreadsheet after enabling macros. This is an example of a macro that will print out the values in Cells (1, 1) to (1, 8).
 
-```vba
+```java
 Sub DQAnalysis()
     Worksheets("DQ Analysis").Activate
 
@@ -29,6 +29,8 @@ Sub DQAnalysis()
 End Sub
 ```
 
+*Note: I haven&rsquo;t found support for vba syntax highlight so I&rsquo;m telling the source block it&rsquo;s java code just for the colors.*
+
 We can access cells with the `Cells` keyword or using `Range`. We can always reference the existing methods and properties in Microsoft&rsquo;s website <sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup>.
 
 
@@ -37,7 +39,7 @@ We can access cells with the `Cells` keyword or using `Range`. We can always ref
 
 ## Subroutine Declaration
 
-```vba
+```java
 Sub MySubroutine()
     'code goes here
 End Sub
@@ -46,7 +48,7 @@ End Sub
 
 ## Variable Declaration
 
-```vba
+```java
 Dim my_number As Integer
 ```
 
@@ -71,7 +73,7 @@ Dim my_number As Integer
 
 The `object` type can point to data of any type, can be used as generic type for whenever you don&rsquo;t know the type of the variable it may point to.
 
-```vba
+```java
 Dim my_object As Object
 ```
 
@@ -86,13 +88,13 @@ We index arrays with an integer `i`. Arrays in VBA are zero-based.
 
 Declaring arrays.
 
-```vba
+```java
 Dim tickers(11) As String
 ```
 
 Accessing arrays.
 
-```vba
+```java
 tickers(0) = "AY"
 tickers(1) = "CSIQ"
 tickers(2) = "DQ"
@@ -103,8 +105,14 @@ tickers(2) = "DQ"
 
 Concatenating strings.
 
-```vba
+```java
 Range("A1").Value = "All Stocks (" + yearValue + ")"
+```
+
+Printing formatted strings.
+
+```java
+MsgBox "This code ran in " & (endTime - startTime) & " seconds for the year " & (yearValue)
 ```
 
 
@@ -117,7 +125,7 @@ Here is some syntax reference for the common keywords in VBA:
 
 If, Then.
 
-```vba
+```java
 If 3 > 2 Then
     ' Code here
 End If
@@ -125,19 +133,19 @@ End If
 
 Equal operator.
 
-```vba
+```java
 Cells(i, 1).Value = "DQ"
 ```
 
 Not equal operator.
 
-```vba
+```java
 Cells(i - 1, 1).Value <> "DQ"
 ```
 
 And keyword.
 
-```vba
+```java
 If Cells(i, 1).Value = "DQ" And Cells(i - 1, 1).Value <> "DQ" Then
     'set starting price
 End If
@@ -145,7 +153,7 @@ End If
 
 ElseIf.
 
-```vba
+```java
 If Cells(4, 3) > 0 Then
     'Color the cell green
     Cells(4, 3).Interior.Color = vbGreen
@@ -163,7 +171,7 @@ End If
 
 For loop.
 
-```vba
+```java
 For i = 1 To 10
     ' Code here
 Next i
@@ -171,7 +179,7 @@ Next i
 
 Nested loops.
 
-```vba
+```java
 For i = 1 To 10
     ' code here
     For j = 1 to 20
@@ -182,7 +190,7 @@ Next i
 
 Accessing arrays in loops.
 
-```vba
+```java
 For i = 0 To 11
     ticker = tickers(i)
     ' Do stuff with ticker
@@ -194,14 +202,14 @@ Next i
 
 Styling.
 
-```vba
+```java
 Range("A3:C3").Font.Bold = True
 Columns("B").AutoFit
 ```
 
 Number Formatting.
 
-```vba
+```java
 Range("B4:B15").NumberFormat = "#,##0"
 Range("C4:C15").NumberFormat = "0.0%"
 ```
@@ -215,7 +223,7 @@ Digits of Precision.
 
 Colors.
 
-```vba
+```java
 Cells(4, 3).Interior.Color = vbGreen
 Cells(4, 3).Interior.Color = vbRed
 Cells(4, 3).Interior.Color = xlNone
@@ -237,7 +245,7 @@ A good way to find them is to create a few cases by hand first and see if a patt
 
 We can then assume that our output will be `output = 4/input`. So the pattern will be:
 
-```vba
+```java
 Sub DivBy4()
     For i = 1 To 10
         Cells(i, 2).Value = 4 / Cells(i, 1).Value
@@ -250,15 +258,17 @@ The code will give us the result of any input we give it. So the value of cell 2
 Once our design is solid, we can reuse the code in other applications as long as it fits them. The more cases it can cover, the better.
 
 
-# Research
+# Doing Research
 
-Another way to iterate over our design patterns is to look for answers that other people have come up with or simply look at the documentation for a better understanding of the features and rules of the programming language.
+Another way to improve our design patterns is to look for answers that other people have come up with or simply look at the documentation for a better understanding of the features and rules of the programming language.
 
 For example, we wouldn&rsquo;t be able to know what `xlUp` does without looking at the documentation or getting that information from a quick google search.
 
-```vba
+```java
 rowEnd = Cells(Rows.Count, "A").End(xlUp).Row
 ```
+
+We can refer to Microsoft&rsquo;s documentation <sup><a id="fnr.1.100" class="footref" href="#fn.1" role="doc-backlink">1</a></sup> for more information about VBA.
 
 
 # Developing a Macro
@@ -276,7 +286,7 @@ We have to translate that pseudocode into actual code, so now we go step by step
 
 1.  Format our working sheet with headers:
 
-```vba
+```java
 Worksheets("All Stocks Analysis").Activate
 Range("A1").Value = "All Stocks (2018)"
 
@@ -286,25 +296,39 @@ Cells(3, 3).Value = "Return"
 ```
 
 
-# Debugging Code
-
-It&rsquo;s a good idea to execute the macro everytime we complete a step and even make a commit to our repository to keep track of our progress and versions of our code.
-
-Luckily, Excel can help us find problems in our code with its debugging tools. It&rsquo;s also not a bad idea to `google` the error messages to see possible solutions in case we don&rsquo;t see it right away.
-
-
 # Running Macros with Buttons
 
 Go to `Developer=>Button=>Select Area in worksheet=>Select your Macro`. Then you can edit your button name, look and feel, and then test it by clicking it.
 
 Using user input.
 
-```vba
+```java
 yearValue = InputBox("What year would you like to run the analysis on?")
 ```
+
+
+# Debugging and Timing Code
+
+It&rsquo;s a good idea to execute the macro everytime we complete a step and even make a commit to our repository to keep track of our progress and versions of our code.
+
+Luckily, Excel can help us find problems in our code with its debugging tools. It&rsquo;s also not a bad idea to `google` the error messages to see possible solutions in case we don&rsquo;t see it right away.
+
+Measuring timing.
+
+```java
+Dim startTime, endTime As Single
+startTime = Timer
+' Code here
+endTime = Timer
+totalTime = endTime - startTime
+```
+
+Performance will become much more key when working with larger datasets or performing more complex operations like machine learning. Other useful tool is profiling. <sup><a id="fnr.3" class="footref" href="#fn.3" role="doc-backlink">3</a></sup>
 
 ## Footnotes
 
 <sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <https://docs.microsoft.com/en-us/office/vba/api/overview/excel/graph-visual-basic-reference>
 
 <sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <https://en.wikipediarg/wiki/Pointer_(computer_programming)>
+
+<sup><a id="fn.3" class="footnum" href="#fnr.3">3</a></sup> <https://en.wikipedia.org/wiki/Profiling_(computer_programming)>

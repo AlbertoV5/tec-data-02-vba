@@ -2,7 +2,6 @@
 #+author:   Alberto Valdez
 #+email:    avq5ac1@gmail.com
 #+SETUPFILE: https://albertov5.github.io/org-html-themes/org/theme-readtheorg.setup
-#+OPTIONS: num:nil
 #+PROPERTY: header-args :mkdirp yes :dir . :exports both
 #+PROPERTY: header-args:shell :results drawer :wrap example :results silent
 #+PROPERTY: header-args:python :exports both :results output replace
@@ -17,7 +16,7 @@ Excel uses a scripting language to create its macros, it lives inside VBA and th
 
 Macros are Subroutines (=Sub=) that can be called by name from the spreadsheet after enabling macros. This is an example of a macro that will print out the values in Cells (1, 1) to (1, 8).
 
-#+begin_src vba :eval never
+#+begin_src java :eval never
 Sub DQAnalysis()
     Worksheets("DQ Analysis").Activate
 
@@ -37,12 +36,14 @@ Sub DQAnalysis()
 End Sub
 #+end_src
 
+/Note: I haven't found support for vba syntax highlight so I'm telling the source block it's java code just for the colors./
+
 We can access cells with the =Cells= keyword or using =Range=. We can always reference the existing methods and properties in Microsoft's website [fn:1].
 
 * Reference
 
 ** Subroutine Declaration
-#+begin_src vba :eval never
+#+begin_src java :eval never
 Sub MySubroutine()
     'code goes here
 End Sub
@@ -50,7 +51,7 @@ End Sub
 
 ** Variable Declaration
 
-#+begin_src vba :eval never
+#+begin_src java :eval never
 Dim my_number As Integer
 #+end_src
 
@@ -73,7 +74,7 @@ Dim my_number As Integer
 
 The =object= type can point to data of any type, can be used as generic type for whenever you don't know the type of the variable it may point to.
 
-#+begin_src vba :eval never
+#+begin_src java :eval never
 Dim my_object As Object
 #+end_src
 
@@ -86,12 +87,12 @@ Arrays hold an arbitrary number of variables of the same type. Instead of creati
 We index arrays with an integer =i=. Arrays in VBA are zero-based.
 
 Declaring arrays.
-#+begin_src vba :eval never
+#+begin_src java :eval never
 Dim tickers(11) As String
 #+end_src
 
 Accessing arrays.
-#+begin_src vba :eval never
+#+begin_src java :eval never
 tickers(0) = "AY"
 tickers(1) = "CSIQ"
 tickers(2) = "DQ"
@@ -100,8 +101,13 @@ tickers(2) = "DQ"
 ** Strings
 
 Concatenating strings.
-#+begin_src vba :eval never
+#+begin_src java :eval never
 Range("A1").Value = "All Stocks (" + yearValue + ")"
+#+end_src
+
+Printing formatted strings.
+#+begin_src java :eval never
+MsgBox "This code ran in " & (endTime - startTime) & " seconds for the year " & (yearValue)
 #+end_src
 
 * Keywords and Operators
@@ -110,31 +116,31 @@ Here is some syntax reference for the common keywords in VBA:
 
 ** Conditional
 If, Then.
-#+begin_src vba :eval never
+#+begin_src java :eval never
 If 3 > 2 Then
     ' Code here
 End If
 #+end_src
 
 Equal operator.
-#+begin_src vba :eval never
+#+begin_src java :eval never
 Cells(i, 1).Value = "DQ"
 #+end_src
 
 Not equal operator.
-#+begin_src vba :eval never
+#+begin_src java :eval never
 Cells(i - 1, 1).Value <> "DQ"
 #+end_src
 
 And keyword.
-#+begin_src vba :eval never
+#+begin_src java :eval never
 If Cells(i, 1).Value = "DQ" And Cells(i - 1, 1).Value <> "DQ" Then
     'set starting price
 End If
 #+end_src
 
 ElseIf.
-#+begin_src vba :eval never
+#+begin_src java :eval never
 If Cells(4, 3) > 0 Then
     'Color the cell green
     Cells(4, 3).Interior.Color = vbGreen
@@ -151,14 +157,14 @@ End If
 ** Loops
 
 For loop.
-#+begin_src vba :eval never
+#+begin_src java :eval never
 For i = 1 To 10
     ' Code here
 Next i
 #+end_src
 
 Nested loops.
-#+begin_src vba :eval never
+#+begin_src java :eval never
 For i = 1 To 10
     ' code here
     For j = 1 to 20
@@ -168,7 +174,7 @@ Next i
 #+end_src
 
 Accessing arrays in loops.
-#+begin_src vba :eval never
+#+begin_src java :eval never
 For i = 0 To 11
     ticker = tickers(i)
     ' Do stuff with ticker
@@ -178,13 +184,13 @@ Next i
 ** Visual Style Formatting
 
 Styling.
-#+begin_src vba :eval never
+#+begin_src java :eval never
 Range("A3:C3").Font.Bold = True
 Columns("B").AutoFit
 #+end_src
 
 Number Formatting.
-#+begin_src vba :eval never
+#+begin_src java :eval never
 Range("B4:B15").NumberFormat = "#,##0"
 Range("C4:C15").NumberFormat = "0.0%"
 #+end_src
@@ -196,7 +202,7 @@ Digits of Precision.
 | "0.00%" | two digits |
 
 Colors.
-#+begin_src vba :eval never
+#+begin_src java :eval never
 Cells(4, 3).Interior.Color = vbGreen
 Cells(4, 3).Interior.Color = vbRed
 Cells(4, 3).Interior.Color = xlNone
@@ -218,7 +224,7 @@ A good way to find them is to create a few cases by hand first and see if a patt
 
 We can then assume that our output will be =output = 4/input=. So the pattern will be:
 
-#+begin_src vba :eval never
+#+begin_src java :eval never
 Sub DivBy4()
     For i = 1 To 10
         Cells(i, 2).Value = 4 / Cells(i, 1).Value
@@ -231,14 +237,16 @@ The code will give us the result of any input we give it. So the value of cell 2
 Once our design is solid, we can reuse the code in other applications as long as it fits them. The more cases it can cover, the better.
 
 
-* Research
+* Doing Research
 
-Another way to iterate over our design patterns is to look for answers that other people have come up with or simply look at the documentation for a better understanding of the features and rules of the programming language.
+Another way to improve our design patterns is to look for answers that other people have come up with or simply look at the documentation for a better understanding of the features and rules of the programming language.
 
 For example, we wouldn't be able to know what =xlUp= does without looking at the documentation or getting that information from a quick google search.
-#+begin_src vba :eval never
+#+begin_src java :eval never
 rowEnd = Cells(Rows.Count, "A").End(xlUp).Row
 #+end_src
+
+We can refer to Microsoft's documentation [fn:1] for more information about VBA.
 
 
 * Developing a Macro
@@ -255,7 +263,7 @@ In order to create a proper algorithm/design, we will map out a plan of what we 
 We have to translate that pseudocode into actual code, so now we go step by step. For the sake of simplicity, we will only visit the first step:
 
 1. Format our working sheet with headers:
-#+begin_src vba :eval never
+#+begin_src java :eval never
 Worksheets("All Stocks Analysis").Activate
 Range("A1").Value = "All Stocks (2018)"
 
@@ -264,24 +272,35 @@ Cells(3, 2).Value = "Total Daily Volume"
 Cells(3, 3).Value = "Return"
 #+end_src
 
-* Debugging Code
-
-It's a good idea to execute the macro everytime we complete a step and even make a commit to our repository to keep track of our progress and versions of our code.
-
-Luckily, Excel can help us find problems in our code with its debugging tools. It's also not a bad idea to =google= the error messages to see possible solutions in case we don't see it right away.
-
 * Running Macros with Buttons
 
 Go to =Developer=>Button=>Select Area in worksheet=>Select your Macro=.
 Then you can edit your button name, look and feel, and then test it by clicking it.
 
 Using user input.
-#+begin_src vba :eval never
+#+begin_src java :eval never
 yearValue = InputBox("What year would you like to run the analysis on?")
 #+end_src
 
+* Debugging and Timing Code
+
+It's a good idea to execute the macro everytime we complete a step and even make a commit to our repository to keep track of our progress and versions of our code.
+
+Luckily, Excel can help us find problems in our code with its debugging tools. It's also not a bad idea to =google= the error messages to see possible solutions in case we don't see it right away.
+
+Measuring timing.
+#+begin_src java :eval never
+Dim startTime, endTime As Single
+startTime = Timer
+' Code here
+endTime = Timer
+totalTime = endTime - startTime
+#+end_src
+
+Performance will become much more key when working with larger datasets or performing more complex operations like machine learning. Other useful tool is profiling. [fn:3]
 
 * Footnotes
-[fn:2]https://en.wikipediarg/wiki/Pointer_(computer_programming)
 
+[fn:3]https://en.wikipedia.org/wiki/Profiling_(computer_programming)
+[fn:2]https://en.wikipediarg/wiki/Pointer_(computer_programming)
 [fn:1]https://docs.microsoft.com/en-us/office/vba/api/overview/excel/graph-visual-basic-reference

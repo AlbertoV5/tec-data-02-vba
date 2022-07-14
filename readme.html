@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-07-14 Thu 14:39 -->
+<!-- 2022-07-14 Thu 15:34 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Visual Basic for Applications</title>
@@ -23,29 +23,29 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org8c13c47">Introduction</a></li>
-<li><a href="#orgff34453">Reference</a>
+<li><a href="#org8c13c47">1. Introduction</a></li>
+<li><a href="#orgff34453">2. Reference</a>
 <ul>
-<li><a href="#org0dd1a6a">Subroutine Declaration</a></li>
-<li><a href="#org99220e6">Variable Declaration</a></li>
-<li><a href="#orga698558">Data Types</a></li>
-<li><a href="#orga40ebc9">Object Types</a></li>
-<li><a href="#org2f650ba">Arrays</a></li>
-<li><a href="#org0438c70">Strings</a></li>
+<li><a href="#org0dd1a6a">2.1. Subroutine Declaration</a></li>
+<li><a href="#org99220e6">2.2. Variable Declaration</a></li>
+<li><a href="#orga698558">2.3. Data Types</a></li>
+<li><a href="#orga40ebc9">2.4. Object Types</a></li>
+<li><a href="#org2f650ba">2.5. Arrays</a></li>
+<li><a href="#org0438c70">2.6. Strings</a></li>
 </ul>
 </li>
-<li><a href="#org1311e8a">Keywords and Operators</a>
+<li><a href="#org1311e8a">3. Keywords and Operators</a>
 <ul>
-<li><a href="#orgadce8bd">Conditional</a></li>
-<li><a href="#orgd90a8e6">Loops</a></li>
-<li><a href="#orgc7d5313">Visual Style Formatting</a></li>
+<li><a href="#orgadce8bd">3.1. Conditional</a></li>
+<li><a href="#orgd90a8e6">3.2. Loops</a></li>
+<li><a href="#orgc7d5313">3.3. Visual Style Formatting</a></li>
 </ul>
 </li>
-<li><a href="#orgc8a9e1d">Design Patterns</a></li>
-<li><a href="#org48c7696">Research</a></li>
-<li><a href="#org0b1b164">Developing a Macro</a></li>
-<li><a href="#org5fe1040">Debugging Code</a></li>
-<li><a href="#orga077708">Running Macros with Buttons</a></li>
+<li><a href="#orgc8a9e1d">4. Design Patterns</a></li>
+<li><a href="#orgd95be0c">5. Doing Research</a></li>
+<li><a href="#org0b1b164">6. Developing a Macro</a></li>
+<li><a href="#orga077708">7. Running Macros with Buttons</a></li>
+<li><a href="#org0b94e15">8. Debugging and Timing Code</a></li>
 </ul>
 </div>
 </div>
@@ -72,8 +72,8 @@
 </table>
 
 <div id="outline-container-org8c13c47" class="outline-2">
-<h2 id="org8c13c47">Introduction</h2>
-<div class="outline-text-2" id="text-org8c13c47">
+<h2 id="org8c13c47"><span class="section-number-2">1.</span> Introduction</h2>
+<div class="outline-text-2" id="text-1">
 <p>
 Excel uses a scripting language to create its macros, it lives inside VBA and the execution is reserved to Office software. The code can be written in any other editor but Excel has a Development Environment that supports running the scripts directly inside it and they afftect the current work sheet.
 </p>
@@ -83,19 +83,19 @@ Macros are Subroutines (<code>Sub</code>) that can be called by name from the sp
 </p>
 
 <div class="org-src-container">
-<pre class="src src-vba">Sub DQAnalysis()
-    Worksheets("DQ Analysis").Activate
+<pre class="src src-java"><span style="color: #33CCAA;">Sub</span> <span style="color: #DDDDAA;">DQAnalysis</span><span style="color: #CC88CC;">()</span>
+    Worksheets<span style="color: #CC88CC;">(</span><span style="color: #c5937c;">"DQ Analysis"</span><span style="color: #CC88CC;">)</span>.Activate
 
-    Range("A1").Value = "DAQO (Ticker: DQ)"
+    Range<span style="color: #CC88CC;">(</span><span style="color: #c5937c;">"A1"</span><span style="color: #CC88CC;">)</span>.Value = <span style="color: #c5937c;">"DAQO (Ticker: DQ)"</span>
 
-    'Create a header row
-    Cells(3, 1).Value = "Year"
-    Cells(3, 2).Value = "Total Daily Volume"
-    Cells(3, 3).Value = "Return"
+    <span style="color: #DDBB77;">'</span>Create a header row
+    Cells<span style="color: #CC88CC;">(</span><span style="color: #BBCCAA; font-weight: bold;">3</span>, <span style="color: #BBCCAA; font-weight: bold;">1</span><span style="color: #CC88CC;">)</span>.Value = <span style="color: #c5937c;">"Year"</span>
+    Cells<span style="color: #CC88CC;">(</span><span style="color: #BBCCAA; font-weight: bold;">3</span>, <span style="color: #BBCCAA; font-weight: bold;">2</span><span style="color: #CC88CC;">)</span>.Value = <span style="color: #c5937c;">"Total Daily Volume"</span>
+    Cells<span style="color: #CC88CC;">(</span><span style="color: #BBCCAA; font-weight: bold;">3</span>, <span style="color: #BBCCAA; font-weight: bold;">3</span><span style="color: #CC88CC;">)</span>.Value = <span style="color: #c5937c;">"Return"</span>
 
-    Worksheets("2018").Activate
-    For i = 1 To 8
-        MsgBox (Cells(1, i))
+    Worksheets<span style="color: #CC88CC;">(</span><span style="color: #c5937c;">"2018"</span><span style="color: #CC88CC;">)</span>.Activate
+    For i = <span style="color: #BBCCAA; font-weight: bold;">1</span> To <span style="color: #BBCCAA; font-weight: bold;">8</span>
+        MsgBox <span style="color: #CC88CC;">(</span>Cells<span style="color: #DD8877;">(</span><span style="color: #BBCCAA; font-weight: bold;">1</span>, i<span style="color: #DD8877;">)</span><span style="color: #CC88CC;">)</span>
 
     Next i
 
@@ -104,21 +104,25 @@ End Sub
 </div>
 
 <p>
+<i>Note: I haven&rsquo;t found support for vba syntax highlight so I&rsquo;m telling the source block it&rsquo;s java code just for the colors.</i>
+</p>
+
+<p>
 We can access cells with the <code>Cells</code> keyword or using <code>Range</code>. We can always reference the existing methods and properties in Microsoft&rsquo;s website <sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup>.
 </p>
 </div>
 </div>
 
 <div id="outline-container-orgff34453" class="outline-2">
-<h2 id="orgff34453">Reference</h2>
-<div class="outline-text-2" id="text-orgff34453">
+<h2 id="orgff34453"><span class="section-number-2">2.</span> Reference</h2>
+<div class="outline-text-2" id="text-2">
 </div>
 <div id="outline-container-org0dd1a6a" class="outline-3">
-<h3 id="org0dd1a6a">Subroutine Declaration</h3>
-<div class="outline-text-3" id="text-org0dd1a6a">
+<h3 id="org0dd1a6a"><span class="section-number-3">2.1.</span> Subroutine Declaration</h3>
+<div class="outline-text-3" id="text-2-1">
 <div class="org-src-container">
-<pre class="src src-vba">Sub MySubroutine()
-    'code goes here
+<pre class="src src-java"><span style="color: #33CCAA;">Sub</span> <span style="color: #DDDDAA;">MySubroutine</span><span style="color: #CC88CC;">()</span>
+    <span style="color: #DDBB77;">'</span>code goes here
 End Sub
 </pre>
 </div>
@@ -126,18 +130,18 @@ End Sub
 </div>
 
 <div id="outline-container-org99220e6" class="outline-3">
-<h3 id="org99220e6">Variable Declaration</h3>
-<div class="outline-text-3" id="text-org99220e6">
+<h3 id="org99220e6"><span class="section-number-3">2.2.</span> Variable Declaration</h3>
+<div class="outline-text-3" id="text-2-2">
 <div class="org-src-container">
-<pre class="src src-vba">Dim my_number As Integer
+<pre class="src src-java">Dim my_number <span style="color: #33CCAA;">As</span> <span style="color: #a9dbfa;">Integer</span>
 </pre>
 </div>
 </div>
 </div>
 
 <div id="outline-container-orga698558" class="outline-3">
-<h3 id="orga698558">Data Types</h3>
-<div class="outline-text-3" id="text-orga698558">
+<h3 id="orga698558"><span class="section-number-3">2.3.</span> Data Types</h3>
+<div class="outline-text-3" id="text-2-3">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -221,14 +225,14 @@ End Sub
 </div>
 
 <div id="outline-container-orga40ebc9" class="outline-3">
-<h3 id="orga40ebc9">Object Types</h3>
-<div class="outline-text-3" id="text-orga40ebc9">
+<h3 id="orga40ebc9"><span class="section-number-3">2.4.</span> Object Types</h3>
+<div class="outline-text-3" id="text-2-4">
 <p>
 The <code>object</code> type can point to data of any type, can be used as generic type for whenever you don&rsquo;t know the type of the variable it may point to.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-vba">Dim my_object As Object
+<pre class="src src-java">Dim my_object <span style="color: #33CCAA;">As</span> <span style="color: #a9dbfa;">Object</span>
 </pre>
 </div>
 
@@ -239,8 +243,8 @@ The <code>object</code> type can point to data of any type, can be used as gener
 </div>
 
 <div id="outline-container-org2f650ba" class="outline-3">
-<h3 id="org2f650ba">Arrays</h3>
-<div class="outline-text-3" id="text-org2f650ba">
+<h3 id="org2f650ba"><span class="section-number-3">2.5.</span> Arrays</h3>
+<div class="outline-text-3" id="text-2-5">
 <p>
 Arrays hold an arbitrary number of variables of the same type. Instead of creating many variables that share a type, we can create an array.
 </p>
@@ -253,7 +257,7 @@ We index arrays with an integer <code>i</code>. Arrays in VBA are zero-based.
 Declaring arrays.
 </p>
 <div class="org-src-container">
-<pre class="src src-vba">Dim tickers(11) As String
+<pre class="src src-java"><span style="color: #33CCAA;">Dim</span> <span style="color: #DDDDAA;">tickers</span><span style="color: #CC88CC;">(</span><span style="color: #BBCCAA; font-weight: bold;">11</span><span style="color: #CC88CC;">)</span> As String
 </pre>
 </div>
 
@@ -261,22 +265,30 @@ Declaring arrays.
 Accessing arrays.
 </p>
 <div class="org-src-container">
-<pre class="src src-vba">tickers(0) = "AY"
-tickers(1) = "CSIQ"
-tickers(2) = "DQ"
+<pre class="src src-java">tickers<span style="color: #CC88CC;">(</span><span style="color: #BBCCAA; font-weight: bold;">0</span><span style="color: #CC88CC;">)</span> = <span style="color: #c5937c;">"AY"</span>
+tickers<span style="color: #CC88CC;">(</span><span style="color: #BBCCAA; font-weight: bold;">1</span><span style="color: #CC88CC;">)</span> = <span style="color: #c5937c;">"CSIQ"</span>
+tickers<span style="color: #CC88CC;">(</span><span style="color: #BBCCAA; font-weight: bold;">2</span><span style="color: #CC88CC;">)</span> = <span style="color: #c5937c;">"DQ"</span>
 </pre>
 </div>
 </div>
 </div>
 
 <div id="outline-container-org0438c70" class="outline-3">
-<h3 id="org0438c70">Strings</h3>
-<div class="outline-text-3" id="text-org0438c70">
+<h3 id="org0438c70"><span class="section-number-3">2.6.</span> Strings</h3>
+<div class="outline-text-3" id="text-2-6">
 <p>
 Concatenating strings.
 </p>
 <div class="org-src-container">
-<pre class="src src-vba">Range("A1").Value = "All Stocks (" + yearValue + ")"
+<pre class="src src-java">Range<span style="color: #CC88CC;">(</span><span style="color: #c5937c;">"A1"</span><span style="color: #CC88CC;">)</span>.Value = <span style="color: #c5937c;">"All Stocks ("</span> + yearValue + <span style="color: #c5937c;">")"</span>
+</pre>
+</div>
+
+<p>
+Printing formatted strings.
+</p>
+<div class="org-src-container">
+<pre class="src src-java">MsgBox <span style="color: #c5937c;">"This code ran in "</span> &amp; <span style="color: #CC88CC;">(</span>endTime - startTime<span style="color: #CC88CC;">)</span> &amp; <span style="color: #c5937c;">" seconds for the year "</span> &amp; <span style="color: #CC88CC;">(</span>yearValue<span style="color: #CC88CC;">)</span>
 </pre>
 </div>
 </div>
@@ -284,22 +296,22 @@ Concatenating strings.
 </div>
 
 <div id="outline-container-org1311e8a" class="outline-2">
-<h2 id="org1311e8a">Keywords and Operators</h2>
-<div class="outline-text-2" id="text-org1311e8a">
+<h2 id="org1311e8a"><span class="section-number-2">3.</span> Keywords and Operators</h2>
+<div class="outline-text-2" id="text-3">
 <p>
 Here is some syntax reference for the common keywords in VBA:
 </p>
 </div>
 
 <div id="outline-container-orgadce8bd" class="outline-3">
-<h3 id="orgadce8bd">Conditional</h3>
-<div class="outline-text-3" id="text-orgadce8bd">
+<h3 id="orgadce8bd"><span class="section-number-3">3.1.</span> Conditional</h3>
+<div class="outline-text-3" id="text-3-1">
 <p>
 If, Then.
 </p>
 <div class="org-src-container">
-<pre class="src src-vba">If 3 &gt; 2 Then
-    ' Code here
+<pre class="src src-java">If <span style="color: #BBCCAA; font-weight: bold;">3</span> &gt; <span style="color: #BBCCAA; font-weight: bold;">2</span> Then
+    <span style="color: #DDBB77;">'</span> Code here
 End If
 </pre>
 </div>
@@ -308,7 +320,7 @@ End If
 Equal operator.
 </p>
 <div class="org-src-container">
-<pre class="src src-vba">Cells(i, 1).Value = "DQ"
+<pre class="src src-java">Cells<span style="color: #CC88CC;">(</span><span style="color: #33CCAA;">i</span>, <span style="color: #BBCCAA; font-weight: bold;">1</span><span style="color: #CC88CC;">)</span>.Value = <span style="color: #c5937c;">"DQ"</span>
 </pre>
 </div>
 
@@ -316,7 +328,7 @@ Equal operator.
 Not equal operator.
 </p>
 <div class="org-src-container">
-<pre class="src src-vba">Cells(i - 1, 1).Value &lt;&gt; "DQ"
+<pre class="src src-java">Cells<span style="color: #CC88CC;">(</span>i - <span style="color: #BBCCAA; font-weight: bold;">1</span>, <span style="color: #BBCCAA; font-weight: bold;">1</span><span style="color: #CC88CC;">)</span>.<span style="color: #33CCAA;">Value</span> <span style="color: #CC88CC;">&lt;&gt;</span> <span style="color: #c5937c;">"DQ"</span>
 </pre>
 </div>
 
@@ -324,8 +336,8 @@ Not equal operator.
 And keyword.
 </p>
 <div class="org-src-container">
-<pre class="src src-vba">If Cells(i, 1).Value = "DQ" And Cells(i - 1, 1).Value &lt;&gt; "DQ" Then
-    'set starting price
+<pre class="src src-java"><span style="color: #33CCAA;">If</span> <span style="color: #DDDDAA;">Cells</span><span style="color: #CC88CC;">(</span><span style="color: #33CCAA;">i</span>, <span style="color: #BBCCAA; font-weight: bold;">1</span><span style="color: #CC88CC;">)</span>.Value = <span style="color: #c5937c;">"DQ"</span> And Cells<span style="color: #CC88CC;">(</span>i - <span style="color: #BBCCAA; font-weight: bold;">1</span>, <span style="color: #BBCCAA; font-weight: bold;">1</span><span style="color: #CC88CC;">)</span>.<span style="color: #33CCAA;">Value</span> <span style="color: #CC88CC;">&lt;&gt;</span> <span style="color: #c5937c;">"DQ"</span> Then
+    <span style="color: #DDBB77;">'</span>set starting price
 End If
 </pre>
 </div>
@@ -334,15 +346,15 @@ End If
 ElseIf.
 </p>
 <div class="org-src-container">
-<pre class="src src-vba">If Cells(4, 3) &gt; 0 Then
-    'Color the cell green
-    Cells(4, 3).Interior.Color = vbGreen
-ElseIf Cells(4, 3) &lt; 0 Then
-    'Color the cell red
-    Cells(4, 3).Interior.Color = vbRed
+<pre class="src src-java"><span style="color: #33CCAA;">If</span> <span style="color: #DDDDAA;">Cells</span><span style="color: #CC88CC;">(</span><span style="color: #BBCCAA; font-weight: bold;">4</span>, <span style="color: #BBCCAA; font-weight: bold;">3</span><span style="color: #CC88CC;">)</span> &gt; <span style="color: #BBCCAA; font-weight: bold;">0</span> Then
+    <span style="color: #DDBB77;">'</span>Color the cell green
+    Cells<span style="color: #CC88CC;">(</span><span style="color: #BBCCAA; font-weight: bold;">4</span>, <span style="color: #BBCCAA; font-weight: bold;">3</span><span style="color: #CC88CC;">)</span>.<span style="color: #3399DD;">Interior</span>.Color = vbGreen
+ElseIf Cells<span style="color: #CC88CC;">(</span><span style="color: #BBCCAA; font-weight: bold;">4</span>, <span style="color: #BBCCAA; font-weight: bold;">3</span><span style="color: #CC88CC;">)</span> &lt; <span style="color: #BBCCAA; font-weight: bold;">0</span> Then
+    <span style="color: #DDBB77;">'</span>Color the cell red
+    Cells<span style="color: #CC88CC;">(</span><span style="color: #BBCCAA; font-weight: bold;">4</span>, <span style="color: #BBCCAA; font-weight: bold;">3</span><span style="color: #CC88CC;">)</span>.<span style="color: #3399DD;">Interior</span>.Color = vbRed
 Else
-    'Clear the cell color
-    Cells(4, 3).Interior.Color = xlNone
+    <span style="color: #DDBB77;">'</span>Clear the cell color
+    Cells<span style="color: #CC88CC;">(</span><span style="color: #BBCCAA; font-weight: bold;">4</span>, <span style="color: #BBCCAA; font-weight: bold;">3</span><span style="color: #CC88CC;">)</span>.<span style="color: #3399DD;">Interior</span>.Color = xlNone
 End If
 </pre>
 </div>
@@ -351,14 +363,14 @@ End If
 
 
 <div id="outline-container-orgd90a8e6" class="outline-3">
-<h3 id="orgd90a8e6">Loops</h3>
-<div class="outline-text-3" id="text-orgd90a8e6">
+<h3 id="orgd90a8e6"><span class="section-number-3">3.2.</span> Loops</h3>
+<div class="outline-text-3" id="text-3-2">
 <p>
 For loop.
 </p>
 <div class="org-src-container">
-<pre class="src src-vba">For i = 1 To 10
-    ' Code here
+<pre class="src src-java"><span style="color: #33CCAA;">For</span> <span style="color: #a9dbfa;">i</span> = <span style="color: #BBCCAA; font-weight: bold;">1</span> To <span style="color: #BBCCAA; font-weight: bold;">10</span>
+    <span style="color: #DDBB77;">'</span> Code here
 Next i
 </pre>
 </div>
@@ -367,10 +379,10 @@ Next i
 Nested loops.
 </p>
 <div class="org-src-container">
-<pre class="src src-vba">For i = 1 To 10
-    ' code here
-    For j = 1 to 20
-        ' code here
+<pre class="src src-java"><span style="color: #33CCAA;">For</span> <span style="color: #a9dbfa;">i</span> = <span style="color: #BBCCAA; font-weight: bold;">1</span> To <span style="color: #BBCCAA; font-weight: bold;">10</span>
+    <span style="color: #DDBB77;">'</span> code here
+    For j = <span style="color: #BBCCAA; font-weight: bold;">1</span> to <span style="color: #BBCCAA; font-weight: bold;">20</span>
+        <span style="color: #DDBB77;">'</span> code here
     Next j
 Next i
 </pre>
@@ -380,9 +392,9 @@ Next i
 Accessing arrays in loops.
 </p>
 <div class="org-src-container">
-<pre class="src src-vba">For i = 0 To 11
-    ticker = tickers(i)
-    ' Do stuff with ticker
+<pre class="src src-java"><span style="color: #33CCAA;">For</span> <span style="color: #a9dbfa;">i</span> = <span style="color: #BBCCAA; font-weight: bold;">0</span> To <span style="color: #BBCCAA; font-weight: bold;">11</span>
+    ticker = tickers<span style="color: #CC88CC;">(</span>i<span style="color: #CC88CC;">)</span>
+    <span style="color: #DDBB77;">'</span> Do stuff with ticker
 Next i
 </pre>
 </div>
@@ -390,14 +402,14 @@ Next i
 </div>
 
 <div id="outline-container-orgc7d5313" class="outline-3">
-<h3 id="orgc7d5313">Visual Style Formatting</h3>
-<div class="outline-text-3" id="text-orgc7d5313">
+<h3 id="orgc7d5313"><span class="section-number-3">3.3.</span> Visual Style Formatting</h3>
+<div class="outline-text-3" id="text-3-3">
 <p>
 Styling.
 </p>
 <div class="org-src-container">
-<pre class="src src-vba">Range("A3:C3").Font.Bold = True
-Columns("B").AutoFit
+<pre class="src src-java">Range<span style="color: #CC88CC;">(</span><span style="color: #c5937c;">"A3:C3"</span><span style="color: #CC88CC;">)</span>.<span style="color: #3399DD;">Font</span>.Bold = True
+Columns<span style="color: #CC88CC;">(</span><span style="color: #c5937c;">"B"</span><span style="color: #CC88CC;">)</span>.AutoFit
 </pre>
 </div>
 
@@ -405,8 +417,8 @@ Columns("B").AutoFit
 Number Formatting.
 </p>
 <div class="org-src-container">
-<pre class="src src-vba">Range("B4:B15").NumberFormat = "#,##0"
-Range("C4:C15").NumberFormat = "0.0%"
+<pre class="src src-java">Range<span style="color: #CC88CC;">(</span><span style="color: #c5937c;">"B4:B15"</span><span style="color: #CC88CC;">)</span>.NumberFormat = <span style="color: #c5937c;">"#,##0"</span>
+Range<span style="color: #CC88CC;">(</span><span style="color: #c5937c;">"C4:C15"</span><span style="color: #CC88CC;">)</span>.NumberFormat = <span style="color: #c5937c;">"0.0%"</span>
 </pre>
 </div>
 
@@ -444,9 +456,9 @@ Digits of Precision.
 Colors.
 </p>
 <div class="org-src-container">
-<pre class="src src-vba">Cells(4, 3).Interior.Color = vbGreen
-Cells(4, 3).Interior.Color = vbRed
-Cells(4, 3).Interior.Color = xlNone
+<pre class="src src-java">Cells<span style="color: #CC88CC;">(</span><span style="color: #BBCCAA; font-weight: bold;">4</span>, <span style="color: #BBCCAA; font-weight: bold;">3</span><span style="color: #CC88CC;">)</span>.<span style="color: #3399DD;">Interior</span>.Color = vbGreen
+Cells<span style="color: #CC88CC;">(</span><span style="color: #BBCCAA; font-weight: bold;">4</span>, <span style="color: #BBCCAA; font-weight: bold;">3</span><span style="color: #CC88CC;">)</span>.<span style="color: #3399DD;">Interior</span>.Color = vbRed
+Cells<span style="color: #CC88CC;">(</span><span style="color: #BBCCAA; font-weight: bold;">4</span>, <span style="color: #BBCCAA; font-weight: bold;">3</span><span style="color: #CC88CC;">)</span>.<span style="color: #3399DD;">Interior</span>.Color = xlNone
 </pre>
 </div>
 </div>
@@ -455,8 +467,8 @@ Cells(4, 3).Interior.Color = xlNone
 
 
 <div id="outline-container-orgc8a9e1d" class="outline-2">
-<h2 id="orgc8a9e1d">Design Patterns</h2>
-<div class="outline-text-2" id="text-orgc8a9e1d">
+<h2 id="orgc8a9e1d"><span class="section-number-2">4.</span> Design Patterns</h2>
+<div class="outline-text-2" id="text-4">
 <p>
 Patterns can be expressed as pseudocode, which means that we are only describing what the process looks like once we generalize it.
 </p>
@@ -514,9 +526,9 @@ We can then assume that our output will be <code>output = 4/input</code>. So the
 </p>
 
 <div class="org-src-container">
-<pre class="src src-vba">Sub DivBy4()
-    For i = 1 To 10
-        Cells(i, 2).Value = 4 / Cells(i, 1).Value
+<pre class="src src-java"><span style="color: #33CCAA;">Sub</span> <span style="color: #DDDDAA;">DivBy4</span><span style="color: #CC88CC;">()</span>
+    For i = <span style="color: #BBCCAA; font-weight: bold;">1</span> To <span style="color: #BBCCAA; font-weight: bold;">10</span>
+        Cells<span style="color: #CC88CC;">(</span>i, <span style="color: #BBCCAA; font-weight: bold;">2</span><span style="color: #CC88CC;">)</span>.Value = <span style="color: #BBCCAA; font-weight: bold;">4</span> / Cells<span style="color: #CC88CC;">(</span>i, <span style="color: #BBCCAA; font-weight: bold;">1</span><span style="color: #CC88CC;">)</span>.Value
     Next i
 End Sub
 </pre>
@@ -533,27 +545,31 @@ Once our design is solid, we can reuse the code in other applications as long as
 </div>
 
 
-<div id="outline-container-org48c7696" class="outline-2">
-<h2 id="org48c7696">Research</h2>
-<div class="outline-text-2" id="text-org48c7696">
+<div id="outline-container-orgd95be0c" class="outline-2">
+<h2 id="orgd95be0c"><span class="section-number-2">5.</span> Doing Research</h2>
+<div class="outline-text-2" id="text-5">
 <p>
-Another way to iterate over our design patterns is to look for answers that other people have come up with or simply look at the documentation for a better understanding of the features and rules of the programming language.
+Another way to improve our design patterns is to look for answers that other people have come up with or simply look at the documentation for a better understanding of the features and rules of the programming language.
 </p>
 
 <p>
 For example, we wouldn&rsquo;t be able to know what <code>xlUp</code> does without looking at the documentation or getting that information from a quick google search.
 </p>
 <div class="org-src-container">
-<pre class="src src-vba">rowEnd = Cells(Rows.Count, "A").End(xlUp).Row
+<pre class="src src-java">rowEnd = Cells<span style="color: #CC88CC;">(</span><span style="color: #3399DD;">Rows</span>.Count, <span style="color: #c5937c;">"A"</span><span style="color: #CC88CC;">)</span>.End<span style="color: #CC88CC;">(</span>xlUp<span style="color: #CC88CC;">)</span>.Row
 </pre>
 </div>
+
+<p>
+We can refer to Microsoft&rsquo;s documentation <sup><a id="fnr.1.100" class="footref" href="#fn.1" role="doc-backlink">1</a></sup> for more information about VBA.
+</p>
 </div>
 </div>
 
 
 <div id="outline-container-org0b1b164" class="outline-2">
-<h2 id="org0b1b164">Developing a Macro</h2>
-<div class="outline-text-2" id="text-org0b1b164">
+<h2 id="org0b1b164"><span class="section-number-2">6.</span> Developing a Macro</h2>
+<div class="outline-text-2" id="text-6">
 <p>
 In order to create a proper algorithm/design, we will map out a plan of what we need to execute. Let&rsquo;s write down the an example of a general objective and then go step by step:
 </p>
@@ -575,33 +591,20 @@ We have to translate that pseudocode into actual code, so now we go step by step
 <li>Format our working sheet with headers:</li>
 </ol>
 <div class="org-src-container">
-<pre class="src src-vba">Worksheets("All Stocks Analysis").Activate
-Range("A1").Value = "All Stocks (2018)"
+<pre class="src src-java">Worksheets<span style="color: #CC88CC;">(</span><span style="color: #c5937c;">"All Stocks Analysis"</span><span style="color: #CC88CC;">)</span>.Activate
+Range<span style="color: #CC88CC;">(</span><span style="color: #c5937c;">"A1"</span><span style="color: #CC88CC;">)</span>.Value = <span style="color: #c5937c;">"All Stocks (2018)"</span>
 
-Cells(3, 1).Value = "Ticker"
-Cells(3, 2).Value = "Total Daily Volume"
-Cells(3, 3).Value = "Return"
+Cells<span style="color: #CC88CC;">(</span><span style="color: #BBCCAA; font-weight: bold;">3</span>, <span style="color: #BBCCAA; font-weight: bold;">1</span><span style="color: #CC88CC;">)</span>.Value = <span style="color: #c5937c;">"Ticker"</span>
+Cells<span style="color: #CC88CC;">(</span><span style="color: #BBCCAA; font-weight: bold;">3</span>, <span style="color: #BBCCAA; font-weight: bold;">2</span><span style="color: #CC88CC;">)</span>.Value = <span style="color: #c5937c;">"Total Daily Volume"</span>
+Cells<span style="color: #CC88CC;">(</span><span style="color: #BBCCAA; font-weight: bold;">3</span>, <span style="color: #BBCCAA; font-weight: bold;">3</span><span style="color: #CC88CC;">)</span>.Value = <span style="color: #c5937c;">"Return"</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org5fe1040" class="outline-2">
-<h2 id="org5fe1040">Debugging Code</h2>
-<div class="outline-text-2" id="text-org5fe1040">
-<p>
-It&rsquo;s a good idea to execute the macro everytime we complete a step and even make a commit to our repository to keep track of our progress and versions of our code.
-</p>
-
-<p>
-Luckily, Excel can help us find problems in our code with its debugging tools. It&rsquo;s also not a bad idea to <code>google</code> the error messages to see possible solutions in case we don&rsquo;t see it right away.
-</p>
-</div>
-</div>
-
 <div id="outline-container-orga077708" class="outline-2">
-<h2 id="orga077708">Running Macros with Buttons</h2>
-<div class="outline-text-2" id="text-orga077708">
+<h2 id="orga077708"><span class="section-number-2">7.</span> Running Macros with Buttons</h2>
+<div class="outline-text-2" id="text-7">
 <p>
 Go to <code>Developer=&gt;Button=&gt;Select Area in worksheet=&gt;Select your Macro</code>.
 Then you can edit your button name, look and feel, and then test it by clicking it.
@@ -611,9 +614,38 @@ Then you can edit your button name, look and feel, and then test it by clicking 
 Using user input.
 </p>
 <div class="org-src-container">
-<pre class="src src-vba">yearValue = InputBox("What year would you like to run the analysis on?")
+<pre class="src src-java">yearValue = InputBox<span style="color: #CC88CC;">(</span><span style="color: #c5937c;">"What year would you like to run the analysis on?"</span><span style="color: #CC88CC;">)</span>
 </pre>
 </div>
+</div>
+</div>
+
+<div id="outline-container-org0b94e15" class="outline-2">
+<h2 id="org0b94e15"><span class="section-number-2">8.</span> Debugging and Timing Code</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+It&rsquo;s a good idea to execute the macro everytime we complete a step and even make a commit to our repository to keep track of our progress and versions of our code.
+</p>
+
+<p>
+Luckily, Excel can help us find problems in our code with its debugging tools. It&rsquo;s also not a bad idea to <code>google</code> the error messages to see possible solutions in case we don&rsquo;t see it right away.
+</p>
+
+<p>
+Measuring timing.
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="color: #33CCAA;">Dim</span> <span style="color: #a9dbfa;">startTime</span>, <span style="color: #a9dbfa;">endTime</span> As Single
+startTime = Timer
+<span style="color: #DDBB77;">'</span> Code here
+endTime = Timer
+totalTime = endTime - startTime
+</pre>
+</div>
+
+<p>
+Performance will become much more key when working with larger datasets or performing more complex operations like machine learning. Other useful tool is profiling. <sup><a id="fnr.3" class="footref" href="#fn.3" role="doc-backlink">3</a></sup>
+</p>
 </div>
 </div>
 <div id="footnotes">
@@ -628,12 +660,16 @@ Using user input.
 <a href="https://en.wikipediarg/wiki/Pointer_(computer_programming)">https://en.wikipediarg/wiki/Pointer_(computer_programming)</a>
 </p></div></div>
 
+<div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3" role="doc-backlink">3</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+<a href="https://en.wikipedia.org/wiki/Profiling_(computer_programming)">https://en.wikipedia.org/wiki/Profiling_(computer_programming)</a>
+</p></div></div>
+
 
 </div>
 </div></div>
 <div id="postamble" class="status">
 <p class="author">Author: Alberto Valdez</p>
-<p class="date">Created: 2022-07-14 Thu 14:39</p>
+<p class="date">Created: 2022-07-14 Thu 15:34</p>
 </div>
 </body>
 </html>

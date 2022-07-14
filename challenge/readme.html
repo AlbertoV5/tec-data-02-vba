@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-07-14 Thu 11:04 -->
+<!-- 2022-07-14 Thu 18:43 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Challenge</title>
+<title>Challenge: Refactoring VBA Code</title>
 <meta name="author" content="Alberto Valdez" />
 <meta name="generator" content="Org Mode" />
 <link rel="stylesheet" type="text/css" href="https://albertov5.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"/>
@@ -18,17 +18,7 @@
 </head>
 <body>
 <div id="content" class="content">
-<h1 class="title">Challenge</h1>
-<div id="table-of-contents" role="doc-toc">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents" role="doc-toc">
-<ul>
-<li><a href="#org43072a8">Header</a></li>
-<li><a href="#org1521245">Header</a></li>
-<li><a href="#orgcf5fba5">Header</a></li>
-</ul>
-</div>
-</div>
+<h1 class="title">Challenge: Refactoring VBA Code</h1>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -42,21 +32,164 @@
 </tbody>
 </table>
 
-<div id="outline-container-org43072a8" class="outline-2">
-<h2 id="org43072a8">Header</h2>
+<div id="outline-container-org7a2f9e1" class="outline-2">
+<h2 id="org7a2f9e1">Overview</h2>
+<div class="outline-text-2" id="text-org7a2f9e1">
+<p>
+During this module, we managed to automate various basic Excel tasks using Visual Basic for Applications. The most important part of the process was that we managed to do it without focusing too much on the scripting language but rather the problems we wanted to solve.
+</p>
+
+<p>
+Now that the mission is accomplished and the code works, we venture into optimization in order to make sure our code can cover more cases, particularly those cases where we have to work with data orders of magnitude bigger.
+</p>
+</div>
 </div>
 
-<div id="outline-container-org1521245" class="outline-2">
-<h2 id="org1521245">Header</h2>
+
+<div id="outline-container-orgdc496fd" class="outline-2">
+<h2 id="orgdc496fd">Results</h2>
+<div class="outline-text-2" id="text-orgdc496fd">
+<p>
+Our initial code took about <code>call_unoptimized_2017</code> seconds to run in both years.
+</p>
+
+<p>
+Initial, unoptimized code.
+</p>
+<img src="./resources/VBA_Unoptimized_2017.png" alt="Unoptimized 2017" width="500">
+<img src="./resources/VBA_Unoptimized_2018.png" alt="Unoptimized 2017" width="500">
+
+<p>
+The main problem with that version is that in had both conditional and nested loops that weren&rsquo;t completely necessary.
+</p>
+
+<p>
+This is how our main loop looked initially.
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="color: #33CCAA;">For</span> <span style="color: #a9dbfa;">i</span> = <span style="color: #BBCCAA; font-weight: bold;">0</span> To <span style="color: #BBCCAA; font-weight: bold;">11</span>
+    ticker = tickers<span style="color: #CC88CC;">(</span>i<span style="color: #CC88CC;">)</span>
+    totalVolume = <span style="color: #BBCCAA; font-weight: bold;">0</span>
+    Worksheets<span style="color: #CC88CC;">(</span><span style="color: #c5937c;">"2018"</span><span style="color: #CC88CC;">)</span>.Activate
+    For j = <span style="color: #BBCCAA; font-weight: bold;">2</span> To RowCount
+        If Cells<span style="color: #CC88CC;">(</span>j, <span style="color: #BBCCAA; font-weight: bold;">1</span><span style="color: #CC88CC;">)</span>.Value = ticker Then
+            totalVolume = totalVolume + Cells<span style="color: #CC88CC;">(</span>j, <span style="color: #BBCCAA; font-weight: bold;">8</span><span style="color: #CC88CC;">)</span>.Value
+        End If
+        If Cells<span style="color: #CC88CC;">(</span>j - <span style="color: #BBCCAA; font-weight: bold;">1</span>, <span style="color: #BBCCAA; font-weight: bold;">1</span><span style="color: #CC88CC;">)</span>.<span style="color: #33CCAA;">Value</span> <span style="color: #CC88CC;">&lt;&gt;</span> ticker And Cells<span style="color: #CC88CC;">(</span>j, <span style="color: #BBCCAA; font-weight: bold;">1</span><span style="color: #CC88CC;">)</span>.Value = ticker Then
+            startingPrice = Cells<span style="color: #CC88CC;">(</span>j, <span style="color: #BBCCAA; font-weight: bold;">6</span><span style="color: #CC88CC;">)</span>.Value
+        End If
+        If Cells<span style="color: #CC88CC;">(</span>j + <span style="color: #BBCCAA; font-weight: bold;">1</span>, <span style="color: #BBCCAA; font-weight: bold;">1</span><span style="color: #CC88CC;">)</span>.<span style="color: #33CCAA;">Value</span> <span style="color: #CC88CC;">&lt;&gt;</span> ticker And Cells<span style="color: #CC88CC;">(</span>j, <span style="color: #BBCCAA; font-weight: bold;">1</span><span style="color: #CC88CC;">)</span>.Value = ticker Then
+            endingPrice = Cells<span style="color: #CC88CC;">(</span>j, <span style="color: #BBCCAA; font-weight: bold;">6</span><span style="color: #CC88CC;">)</span>.Value
+        End If
+    Next j
+    Worksheets<span style="color: #CC88CC;">(</span><span style="color: #c5937c;">"All Stocks Analysis"</span><span style="color: #CC88CC;">)</span>.Activate
+    Cells<span style="color: #CC88CC;">(</span><span style="color: #BBCCAA; font-weight: bold;">4</span> + i, <span style="color: #BBCCAA; font-weight: bold;">1</span><span style="color: #CC88CC;">)</span>.Value = ticker
+    Cells<span style="color: #CC88CC;">(</span><span style="color: #BBCCAA; font-weight: bold;">4</span> + i, <span style="color: #BBCCAA; font-weight: bold;">2</span><span style="color: #CC88CC;">)</span>.Value = totalVolume
+    Cells<span style="color: #CC88CC;">(</span><span style="color: #BBCCAA; font-weight: bold;">4</span> + i, <span style="color: #BBCCAA; font-weight: bold;">3</span><span style="color: #CC88CC;">)</span>.Value = endingPrice / startingPrice - <span style="color: #BBCCAA; font-weight: bold;">1</span>
+Next i
+</pre>
 </div>
 
-<div id="outline-container-orgcf5fba5" class="outline-2">
-<h2 id="orgcf5fba5">Header</h2>
+<ol class="org-ol">
+<li>The outer loop in this case is not necessary as we can initialize a different counter that is updated during the inner loop.</li>
+<li>There are too many single <code>If-Then</code> conditionals, it is better to reduce them.</li>
+<li>We can move the outer loop to a separate process so we don&rsquo;t have to call <code>Worksheets("").Activate</code> every time.</li>
+<li>Having separate loops can improve readability and help us find bugs easily.</li>
+</ol>
+
+<p>
+This is how the main loop looks after refactoring it.
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="color: #33CCAA;">For</span> <span style="color: #a9dbfa;">i</span> = startIndex To RowCount
+    tickerVolumes<span style="color: #CC88CC;">(</span>tickerIndex<span style="color: #CC88CC;">)</span> = tickerVolumes<span style="color: #CC88CC;">(</span>tickerIndex<span style="color: #CC88CC;">)</span> + Cells<span style="color: #CC88CC;">(</span>i, <span style="color: #BBCCAA; font-weight: bold;">8</span><span style="color: #CC88CC;">)</span>.Value
+    If Cells<span style="color: #CC88CC;">(</span>i, <span style="color: #BBCCAA; font-weight: bold;">1</span><span style="color: #CC88CC;">)</span>.<span style="color: #33CCAA;">Value</span> <span style="color: #CC88CC;">&lt;&gt;</span> Cells<span style="color: #CC88CC;">(</span>i - <span style="color: #BBCCAA; font-weight: bold;">1</span>, <span style="color: #BBCCAA; font-weight: bold;">1</span><span style="color: #CC88CC;">)</span>.Value Then
+        tickerStartingPrices<span style="color: #CC88CC;">(</span>tickerIndex<span style="color: #CC88CC;">)</span> = Cells<span style="color: #CC88CC;">(</span>i, <span style="color: #BBCCAA; font-weight: bold;">6</span><span style="color: #CC88CC;">)</span>.Value
+    End If
+    If Cells<span style="color: #CC88CC;">(</span>i, <span style="color: #BBCCAA; font-weight: bold;">1</span><span style="color: #CC88CC;">)</span>.<span style="color: #33CCAA;">Value</span> <span style="color: #CC88CC;">&lt;&gt;</span> Cells<span style="color: #CC88CC;">(</span>i + <span style="color: #BBCCAA; font-weight: bold;">1</span>, <span style="color: #BBCCAA; font-weight: bold;">1</span><span style="color: #CC88CC;">)</span>.Value Then
+        tickerEndingPrices<span style="color: #CC88CC;">(</span>tickerIndex<span style="color: #CC88CC;">)</span> = Cells<span style="color: #CC88CC;">(</span>i, <span style="color: #BBCCAA; font-weight: bold;">6</span><span style="color: #CC88CC;">)</span>.Value
+        tickerIndex = tickerIndex + <span style="color: #BBCCAA; font-weight: bold;">1</span>
+    End If
+Next i
+</pre>
+</div>
+
+<p>
+Of course we moved half of the process to another loop, but this helps us a lot when reading it even without comments.
+</p>
+
+<blockquote>
+<p>
+Flat is better than nested. -Tim Peters.
+</p>
+</blockquote>
+</div>
+</div>
+
+
+<div id="outline-container-org2edffa6" class="outline-2">
+<h2 id="org2edffa6">Summary</h2>
+<div class="outline-text-2" id="text-org2edffa6">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Ticker</th>
+<th scope="col" class="org-right">Return 2017</th>
+<th scope="col" class="org-right">Return 2018</th>
+<th scope="col" class="org-right">Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">AY</td>
+<td class="org-right">8.9%</td>
+<td class="org-right">-7.3%</td>
+<td class="org-right">-16.2%</td>
+</tr>
+
+<tr>
+<td class="org-left">CSIQ</td>
+<td class="org-right">33.1%</td>
+<td class="org-right">-16.3%</td>
+<td class="org-right">-49.4%</td>
+</tr>
+
+<tr>
+<td class="org-left">DQ</td>
+<td class="org-right">199.4%</td>
+<td class="org-right">-62.6%</td>
+<td class="org-right">-262.0%</td>
+</tr>
+
+<tr>
+<td class="org-left">ENPH</td>
+<td class="org-right">129.5%</td>
+<td class="org-right">81.9%</td>
+<td class="org-right">-47.6%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org7012141" class="outline-2">
+<h2 id="org7012141">Header</h2>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alberto Valdez</p>
-<p class="date">Created: 2022-07-14 Thu 11:04</p>
+<p class="date">Created: 2022-07-14 Thu 18:43</p>
 </div>
 </body>
 </html>
