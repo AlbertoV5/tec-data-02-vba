@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-07-13 Wed 23:26 -->
+<!-- 2022-07-14 Thu 11:04 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Readme</title>
+<title>Visual Basic for Applications</title>
 <meta name="author" content="Alberto Valdez" />
 <meta name="generator" content="Org Mode" />
 <link rel="stylesheet" type="text/css" href="https://albertov5.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"/>
@@ -18,13 +18,26 @@
 </head>
 <body>
 <div id="content" class="content">
-<h1 class="title">Readme</h1>
+<h1 class="title">Visual Basic for Applications</h1>
 <div id="table-of-contents" role="doc-toc">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orge340cac">Header</a></li>
-<li><a href="#org34a9d60">Resources</a></li>
+<li><a href="#org4449a1f">Introduction</a></li>
+<li><a href="#orge025137">Reference</a>
+<ul>
+<li><a href="#org3370d76">Subroutine Declaration</a></li>
+<li><a href="#org4b90cea">Variable Declaration</a></li>
+<li><a href="#org38a83bb">Data Types</a></li>
+<li><a href="#orge9f843e">Object Types</a></li>
+</ul>
+</li>
+<li><a href="#orgf787343">Keywords and Operators</a>
+<ul>
+<li><a href="#org4dee328">Conditional</a></li>
+<li><a href="#orgd6517d8">Loops</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -50,17 +63,225 @@
 </tbody>
 </table>
 
-<div id="outline-container-orge340cac" class="outline-2">
-<h2 id="orge340cac">Header</h2>
+<div id="outline-container-org4449a1f" class="outline-2">
+<h2 id="org4449a1f">Introduction</h2>
+<div class="outline-text-2" id="text-org4449a1f">
+<p>
+Excel uses a scripting language to create its macros, it lives inside VBA and the execution is reserved to Office software. The code can be written in any other editor but Excel has a Development Environment that supports running the scripts directly inside it and they afftect the current work sheet.
+</p>
+
+<p>
+Macros are <code>Sub</code> (Subroutines) that can be called by name from the spreadsheet after enabling macros. This is an example of a macro that will print out the values in Cells (1, 1) to (1, 8).
+</p>
+
+<div class="org-src-container">
+<pre class="src src-vba">Sub DQAnalysis()
+    Worksheets("DQ Analysis").Activate
+
+    Range("A1").Value = "DAQO (Ticker: DQ)"
+
+    'Create a header row
+    Cells(3, 1).Value = "Year"
+    Cells(3, 2).Value = "Total Daily Volume"
+    Cells(3, 3).Value = "Return"
+
+    Worksheets("2018").Activate
+    For i = 1 To 8
+        MsgBox (Cells(1, i))
+
+    Next i
+
+End Sub
+</pre>
 </div>
 
-<div id="outline-container-org34a9d60" class="outline-2">
-<h2 id="org34a9d60">Resources</h2>
+<p>
+We can access cells with the <code>Cells</code> keyword or using <code>Range</code>. We can always reference the existing methods and properties in Microsoft&rsquo;s website <sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup>.
+</p>
 </div>
 </div>
+
+<div id="outline-container-orge025137" class="outline-2">
+<h2 id="orge025137">Reference</h2>
+<div class="outline-text-2" id="text-orge025137">
+</div>
+<div id="outline-container-org3370d76" class="outline-3">
+<h3 id="org3370d76">Subroutine Declaration</h3>
+<div class="outline-text-3" id="text-org3370d76">
+<div class="org-src-container">
+<pre class="src src-vba">Sub MySubroutine()
+    'code goes here
+End Sub
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4b90cea" class="outline-3">
+<h3 id="org4b90cea">Variable Declaration</h3>
+<div class="outline-text-3" id="text-org4b90cea">
+<div class="org-src-container">
+<pre class="src src-vba">Dim my_number As Integer
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org38a83bb" class="outline-3">
+<h3 id="org38a83bb">Data Types</h3>
+<div class="outline-text-3" id="text-org38a83bb">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Type</th>
+<th scope="col" class="org-left">Size in Memory</th>
+<th scope="col" class="org-left">Range of Values</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Byte</td>
+<td class="org-left">1 Byte</td>
+<td class="org-left">0 to 255</td>
+</tr>
+
+<tr>
+<td class="org-left">Integer</td>
+<td class="org-left">2 Bytes</td>
+<td class="org-left">-32,768 to 32767</td>
+</tr>
+
+<tr>
+<td class="org-left">Single</td>
+<td class="org-left">4 Bytes</td>
+<td class="org-left">-3.4E38 to 3.4E38</td>
+</tr>
+
+<tr>
+<td class="org-left">Long</td>
+<td class="org-left">8 Bytes</td>
+<td class="org-left">-2,147,483,648 to 2,147,483,648</td>
+</tr>
+
+<tr>
+<td class="org-left">Date</td>
+<td class="org-left">8 Bytes</td>
+<td class="org-left">January 1, 100 to December 31, 999</td>
+</tr>
+
+<tr>
+<td class="org-left">Currency</td>
+<td class="org-left">8 Bytes</td>
+<td class="org-left">-922,337,203,685,477.5808 to 922,337,203,685,477.5807</td>
+</tr>
+
+<tr>
+<td class="org-left">String (dynamic)</td>
+<td class="org-left">10 Bytes</td>
+<td class="org-left">0 to 2 billion characters</td>
+</tr>
+
+<tr>
+<td class="org-left">String (fixed)</td>
+<td class="org-left">string length</td>
+<td class="org-left">1 to approximately 65,400</td>
+</tr>
+
+<tr>
+<td class="org-left">Boolean</td>
+<td class="org-left">4 Bytes</td>
+<td class="org-left">True or False</td>
+</tr>
+
+<tr>
+<td class="org-left">Object</td>
+<td class="org-left">4 Bytes</td>
+<td class="org-left">Object in VBA</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-orge9f843e" class="outline-3">
+<h3 id="orge9f843e">Object Types</h3>
+<div class="outline-text-3" id="text-orge9f843e">
+<p>
+The <code>object</code> type can point to data of any type, can be used as generic type for whenever you don&rsquo;t know the type of the variable it may point to.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-vba">Dim my_object As Object
+</pre>
+</div>
+
+<p>
+<code>Object</code> does not contain the data value itself, as it&rsquo;s a pointer to that value. <sup><a id="fnr.2" class="footref" href="#fn.2" role="doc-backlink">2</a></sup> So it always uses the same space in memory. It&rsquo;s recommended to always define a variable by a specific type rather than trying to point to it at runtime.
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgf787343" class="outline-2">
+<h2 id="orgf787343">Keywords and Operators</h2>
+<div class="outline-text-2" id="text-orgf787343">
+<p>
+Here is some syntax reference for the common keywords in VBA:
+</p>
+</div>
+
+<div id="outline-container-org4dee328" class="outline-3">
+<h3 id="org4dee328">Conditional</h3>
+<div class="outline-text-3" id="text-org4dee328">
+<div class="org-src-container">
+<pre class="src src-vba">If 3 &gt; 2 Then
+    ' Code here
+End If
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd6517d8" class="outline-3">
+<h3 id="orgd6517d8">Loops</h3>
+<div class="outline-text-3" id="text-orgd6517d8">
+<div class="org-src-container">
+<pre class="src src-vba">For i = 1 To 10
+    ' Code here
+Next i
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+<a href="https://docs.microsoft.com/en-us/office/vba/api/overview/excel/graph-visual-basic-reference">https://docs.microsoft.com/en-us/office/vba/api/overview/excel/graph-visual-basic-reference</a>
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2" role="doc-backlink">2</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+<a href="https://en.wikipedia.org/wiki/Pointer_(computer_programming)">https://en.wikipedia.org/wiki/Pointer_(computer_programming)</a>
+</p></div></div>
+
+
+</div>
+</div></div>
 <div id="postamble" class="status">
 <p class="author">Author: Alberto Valdez</p>
-<p class="date">Created: 2022-07-13 Wed 23:26</p>
+<p class="date">Created: 2022-07-14 Thu 11:04</p>
 </div>
 </body>
 </html>

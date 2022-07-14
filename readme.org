@@ -1,4 +1,4 @@
-#+title:    Readme
+#+title:    Visual Basic for Applications
 #+author:   Alberto Valdez
 #+email:    avq5ac1@gmail.com
 #+SETUPFILE: https://albertov5.github.io/org-html-themes/org/theme-readtheorg.setup
@@ -11,6 +11,98 @@
 
 | [[https://albertov5.github.io/tec-data/index.html][<<<Home]] | [[./lesson-1.org][Lesson-1]] | [[./lesson-2.org][Lesson-2]] | [[./challenge/readme.org][Challenge>>]] |
 
-* Header
+* Introduction
 
-* Resources
+Excel uses a scripting language to create its macros, it lives inside VBA and the execution is reserved to Office software. The code can be written in any other editor but Excel has a Development Environment that supports running the scripts directly inside it and they afftect the current work sheet.
+
+Macros are =Sub= (Subroutines) that can be called by name from the spreadsheet after enabling macros. This is an example of a macro that will print out the values in Cells (1, 1) to (1, 8).
+
+#+begin_src vba :eval never
+Sub DQAnalysis()
+    Worksheets("DQ Analysis").Activate
+
+    Range("A1").Value = "DAQO (Ticker: DQ)"
+
+    'Create a header row
+    Cells(3, 1).Value = "Year"
+    Cells(3, 2).Value = "Total Daily Volume"
+    Cells(3, 3).Value = "Return"
+
+    Worksheets("2018").Activate
+    For i = 1 To 8
+        MsgBox (Cells(1, i))
+
+    Next i
+
+End Sub
+#+end_src
+
+We can access cells with the =Cells= keyword or using =Range=. We can always reference the existing methods and properties in Microsoft's website [fn:1].
+
+* Reference
+
+** Subroutine Declaration
+#+begin_src vba :eval never
+Sub MySubroutine()
+    'code goes here
+End Sub
+#+end_src
+
+** Variable Declaration
+
+#+begin_src vba :eval never
+Dim my_number As Integer
+#+end_src
+
+** Data Types
+
+| Type             | Size in Memory | Range of Values                                       |
+|------------------+----------------+-------------------------------------------------------|
+| Byte             | 1 Byte         | 0 to 255                                              |
+| Integer          | 2 Bytes        | -32,768 to 32767                                      |
+| Single           | 4 Bytes        | -3.4E38 to 3.4E38                                     |
+| Long             | 8 Bytes        | -2,147,483,648 to 2,147,483,648                       |
+| Date             | 8 Bytes        | January 1, 100 to December 31, 999                    |
+| Currency         | 8 Bytes        | -922,337,203,685,477.5808 to 922,337,203,685,477.5807 |
+| String (dynamic) | 10 Bytes       | 0 to 2 billion characters                             |
+| String (fixed)   | string length  | 1 to approximately 65,400                             |
+| Boolean          | 4 Bytes        | True or False                                         |
+| Object           | 4 Bytes        | Object in VBA                                         |
+
+** Object Types
+
+The =object= type can point to data of any type, can be used as generic type for whenever you don't know the type of the variable it may point to.
+
+#+begin_src vba :eval never
+Dim my_object As Object
+#+end_src
+
+=Object= does not contain the data value itself, as it's a pointer to that value. [fn:2] So it always uses the same space in memory. It's recommended to always define a variable by a specific type rather than trying to point to it at runtime.
+
+
+* Keywords and Operators
+
+Here is some syntax reference for the common keywords in VBA:
+
+** Conditional
+#+begin_src vba :eval never
+If 3 > 2 Then
+    ' Code here
+End If
+#+end_src
+
+** Loops
+#+begin_src vba :eval never
+For i = 1 To 10
+    ' Code here
+Next i
+#+end_src
+
+
+
+
+
+* Footnotes
+[fn:2]https://en.wikipedia.org/wiki/Pointer_(computer_programming)
+
+[fn:1]https://docs.microsoft.com/en-us/office/vba/api/overview/excel/graph-visual-basic-reference
