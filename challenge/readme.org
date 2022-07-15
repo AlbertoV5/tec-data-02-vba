@@ -84,6 +84,14 @@ Of course we moved half of the process to another loop, but this helps us a lot 
 Flat is better than nested. -Tim Peters.
 #+end_quote
 
+Here is the second part of the process.
+#+begin_src java :eval no
+For i = 0 To 11
+    Worksheets("All Stocks Analysis").Activate
+    Cells(4 + i, 2).Value = tickerVolumes(i)
+    Cells(4 + i, 3).Value = tickerEndingPrices(i) / tickerStartingPrices(i) - 1
+Next i
+#+end_src
 
 * Summary
 
