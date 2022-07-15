@@ -4,7 +4,7 @@
 #+NAME: publish_force
 #+begin_src elisp :exports none :results silent
 (org-publish-project "tec-data" t)
-format
+    format
 #+end_src
 
 #+NAME: publish

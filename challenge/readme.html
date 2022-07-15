@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-07-14 Thu 18:43 -->
+<!-- 2022-07-14 Thu 22:55 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Challenge: Refactoring VBA Code</title>
@@ -19,6 +19,28 @@
 <body>
 <div id="content" class="content">
 <h1 class="title">Challenge: Refactoring VBA Code</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org5abd25a">Overview</a></li>
+<li><a href="#org00a2e5b">Results</a>
+<ul>
+<li><a href="#orga91b696">Original Code</a></li>
+<li><a href="#orgfaa14e9">Refactored Code</a></li>
+<li><a href="#org2024f32">Conclusions</a></li>
+</ul>
+</li>
+<li><a href="#org138b540">Summary</a>
+<ul>
+<li><a href="#orga47a71c">Cons of refactoring code:</a></li>
+<li><a href="#orga31af86">Pros of refactoring code:</a></li>
+</ul>
+</li>
+<li><a href="#orgb6b1278">Closing Thoughts</a></li>
+</ul>
+</div>
+</div>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -32,9 +54,9 @@
 </tbody>
 </table>
 
-<div id="outline-container-org7a2f9e1" class="outline-2">
-<h2 id="org7a2f9e1">Overview</h2>
-<div class="outline-text-2" id="text-org7a2f9e1">
+<div id="outline-container-org5abd25a" class="outline-2">
+<h2 id="org5abd25a">Overview</h2>
+<div class="outline-text-2" id="text-org5abd25a">
 <p>
 During this module, we managed to automate various basic Excel tasks using Visual Basic for Applications. The most important part of the process was that we managed to do it without focusing too much on the scripting language but rather the problems we wanted to solve.
 </p>
@@ -46,23 +68,28 @@ Now that the mission is accomplished and the code works, we venture into optimiz
 </div>
 
 
-<div id="outline-container-orgdc496fd" class="outline-2">
-<h2 id="orgdc496fd">Results</h2>
-<div class="outline-text-2" id="text-orgdc496fd">
+<div id="outline-container-org00a2e5b" class="outline-2">
+<h2 id="org00a2e5b">Results</h2>
+<div class="outline-text-2" id="text-org00a2e5b">
 <p>
-Our initial code took about <code>call_unoptimized_2017</code> seconds to run in both years.
+Our initial code took about <code>0.66</code> seconds to run in both spreadsheets.
 </p>
 
 <p>
 Initial, unoptimized code.
 </p>
 <img src="./resources/VBA_Unoptimized_2017.png" alt="Unoptimized 2017" width="500">
-<img src="./resources/VBA_Unoptimized_2018.png" alt="Unoptimized 2017" width="500">
+<img src="./resources/VBA_Unoptimized_2018.png" alt="Unoptimized 2018" width="500">
+<p></p>
 
 <p>
 The main problem with that version is that in had both conditional and nested loops that weren&rsquo;t completely necessary.
 </p>
+</div>
 
+<div id="outline-container-orga91b696" class="outline-3">
+<h3 id="orga91b696">Original Code</h3>
+<div class="outline-text-3" id="text-orga91b696">
 <p>
 This is how our main loop looked initially.
 </p>
@@ -96,7 +123,12 @@ Next i
 <li>We can move the outer loop to a separate process so we don&rsquo;t have to call <code>Worksheets("").Activate</code> every time.</li>
 <li>Having separate loops can improve readability and help us find bugs easily.</li>
 </ol>
+</div>
+</div>
 
+<div id="outline-container-orgfaa14e9" class="outline-3">
+<h3 id="orgfaa14e9">Refactored Code</h3>
+<div class="outline-text-3" id="text-orgfaa14e9">
 <p>
 This is how the main loop looks after refactoring it.
 </p>
@@ -115,8 +147,16 @@ Next i
 </div>
 
 <p>
-Of course we moved half of the process to another loop, but this helps us a lot when reading it even without comments.
+Of course we moved half of the process to another loop, but this helps us a lot when reading it even without comments. Here is the second part of the process.
 </p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="color: #33CCAA;">For</span> <span style="color: #a9dbfa;">i</span> = <span style="color: #BBCCAA; font-weight: bold;">0</span> To <span style="color: #BBCCAA; font-weight: bold;">11</span>
+    Worksheets<span style="color: #CC88CC;">(</span><span style="color: #c5937c;">"All Stocks Analysis"</span><span style="color: #CC88CC;">)</span>.Activate
+    Cells<span style="color: #CC88CC;">(</span><span style="color: #BBCCAA; font-weight: bold;">4</span> + i, <span style="color: #BBCCAA; font-weight: bold;">2</span><span style="color: #CC88CC;">)</span>.Value = tickerVolumes<span style="color: #CC88CC;">(</span>i<span style="color: #CC88CC;">)</span>
+    Cells<span style="color: #CC88CC;">(</span><span style="color: #BBCCAA; font-weight: bold;">4</span> + i, <span style="color: #BBCCAA; font-weight: bold;">3</span><span style="color: #CC88CC;">)</span>.Value = tickerEndingPrices<span style="color: #CC88CC;">(</span>i<span style="color: #CC88CC;">)</span> / tickerStartingPrices<span style="color: #CC88CC;">(</span>i<span style="color: #CC88CC;">)</span> - <span style="color: #BBCCAA; font-weight: bold;">1</span>
+Next i
+</pre>
+</div>
 
 <blockquote>
 <p>
@@ -126,10 +166,99 @@ Flat is better than nested. -Tim Peters.
 </div>
 </div>
 
+<div id="outline-container-org2024f32" class="outline-3">
+<h3 id="org2024f32">Conclusions</h3>
+<div class="outline-text-3" id="text-org2024f32">
+<p>
+Here are the measurements after the code was refactored.
+</p>
 
-<div id="outline-container-org2edffa6" class="outline-2">
-<h2 id="org2edffa6">Summary</h2>
-<div class="outline-text-2" id="text-org2edffa6">
+<img src="./resources/VBA_Challenge_2017.png" alt="optimized 2017" width="500">
+<img src="./resources/VBA_Challenge_2018.png" alt="optimized 2018" width="500">
+<p></p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">Year</th>
+<th scope="col" class="org-right">Before</th>
+<th scope="col" class="org-right">After</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">2017</td>
+<td class="org-right">0.65</td>
+<td class="org-right">0.12</td>
+</tr>
+
+<tr>
+<td class="org-right">2018</td>
+<td class="org-right">0.66</td>
+<td class="org-right">0.14</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Which means that the code runs about <code>5.5</code> times faster. Imagine telling a client <code>"I'll get back to you in 1 business day"</code> against telling them <code>"I'll get back to you in a week"</code>. Of course that is a dramatic example but it matters.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org138b540" class="outline-2">
+<h2 id="org138b540">Summary</h2>
+<div class="outline-text-2" id="text-org138b540">
+<p>
+Being able to refactor code means a few different things:
+</p>
+
+<ol class="org-ol">
+<li>The person refactoring the code may not be the same who wrote it, so comments and readability are important.</li>
+<li>We can get an initial result and solve a our problems at hand with a first version of the code but if we want to be able to solve more problems, we can always refactor to make it sure we can solve those problems too. As long as they remains within the code design.</li>
+<li>We can spend more time in data analysis instead of coding or waiting for results. If we manage to get good code and good performance, we will have one less thing to worry about.</li>
+</ol>
+</div>
+
+<div id="outline-container-orga47a71c" class="outline-3">
+<h3 id="orga47a71c">Cons of refactoring code:</h3>
+<div class="outline-text-3" id="text-orga47a71c">
+<ol class="org-ol">
+<li>If the original design is too flawed we may spend we may spend too much time trying to figure out what the original coder intended, so we may be better off making our own script.</li>
+<li>We may find ourselves surrounded by a lot of special cases that the original script didn&rsquo;t intent to cover and we may complicate things further if we start adding complexity to the design.</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-orga31af86" class="outline-3">
+<h3 id="orga31af86">Pros of refactoring code:</h3>
+<div class="outline-text-3" id="text-orga31af86">
+<ol class="org-ol">
+<li>Refactoring can include using code from a completely different project but that fits the patterns of our problem at hand, so in that case is valid to reuse code and gain some time in the coding process.</li>
+<li>As long as the scripting language allows it, we can be sure that the code will last for many years as if something out of our control changes like a database or a functionality in Excel, we can refactor our code to fit that new requirement. In case of other languages, we can also include new libraries or technologies that will improve our code performance without needing to change the logic of it.</li>
+</ol>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgb6b1278" class="outline-2">
+<h2 id="orgb6b1278">Closing Thoughts</h2>
+<div class="outline-text-2" id="text-orgb6b1278">
+<p>
+Just as completition of the data analysis, I include a short table of the partial results of the data. Ideally we could create more macros to keep adding years in a sequential way like this and it will only take a few seconds to keep organizing the data in ways we can get a much clearer picture of it.
+</p>
+
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -182,14 +311,10 @@ Flat is better than nested. -Tim Peters.
 </table>
 </div>
 </div>
-
-<div id="outline-container-org7012141" class="outline-2">
-<h2 id="org7012141">Header</h2>
-</div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Alberto Valdez</p>
-<p class="date">Created: 2022-07-14 Thu 18:43</p>
+<p class="date">Created: 2022-07-14 Thu 22:55</p>
 </div>
 </body>
 </html>

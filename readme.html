@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-07-14 Thu 15:34 -->
+<!-- 2022-07-14 Thu 22:55 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Visual Basic for Applications</title>
@@ -23,29 +23,29 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org8c13c47">1. Introduction</a></li>
-<li><a href="#orgff34453">2. Reference</a>
+<li><a href="#orgad10c28">1. Introduction</a></li>
+<li><a href="#org394c6e8">2. Reference</a>
 <ul>
-<li><a href="#org0dd1a6a">2.1. Subroutine Declaration</a></li>
-<li><a href="#org99220e6">2.2. Variable Declaration</a></li>
-<li><a href="#orga698558">2.3. Data Types</a></li>
-<li><a href="#orga40ebc9">2.4. Object Types</a></li>
-<li><a href="#org2f650ba">2.5. Arrays</a></li>
-<li><a href="#org0438c70">2.6. Strings</a></li>
+<li><a href="#org9732717">2.1. Subroutine Declaration</a></li>
+<li><a href="#org73152b9">2.2. Variable Declaration</a></li>
+<li><a href="#orgffc9007">2.3. Data Types</a></li>
+<li><a href="#orgb001174">2.4. Object Types</a></li>
+<li><a href="#org6269b32">2.5. Arrays</a></li>
+<li><a href="#org876fbd1">2.6. Strings</a></li>
 </ul>
 </li>
-<li><a href="#org1311e8a">3. Keywords and Operators</a>
+<li><a href="#org550e6ce">3. Keywords and Operators</a>
 <ul>
-<li><a href="#orgadce8bd">3.1. Conditional</a></li>
-<li><a href="#orgd90a8e6">3.2. Loops</a></li>
-<li><a href="#orgc7d5313">3.3. Visual Style Formatting</a></li>
+<li><a href="#orgcdb3b93">3.1. Conditional</a></li>
+<li><a href="#orgb5cbe44">3.2. Loops</a></li>
+<li><a href="#org332f90b">3.3. Visual Style Formatting</a></li>
 </ul>
 </li>
-<li><a href="#orgc8a9e1d">4. Design Patterns</a></li>
-<li><a href="#orgd95be0c">5. Doing Research</a></li>
-<li><a href="#org0b1b164">6. Developing a Macro</a></li>
-<li><a href="#orga077708">7. Running Macros with Buttons</a></li>
-<li><a href="#org0b94e15">8. Debugging and Timing Code</a></li>
+<li><a href="#org99d5b8e">4. Design Patterns</a></li>
+<li><a href="#org545ca37">5. Doing Research</a></li>
+<li><a href="#org159456a">6. Developing a Macro</a></li>
+<li><a href="#org001d7c3">7. Running Macros with Buttons</a></li>
+<li><a href="#org22df511">8. Debugging and Timing Code</a></li>
 </ul>
 </div>
 </div>
@@ -71,8 +71,8 @@
 </tbody>
 </table>
 
-<div id="outline-container-org8c13c47" class="outline-2">
-<h2 id="org8c13c47"><span class="section-number-2">1.</span> Introduction</h2>
+<div id="outline-container-orgad10c28" class="outline-2">
+<h2 id="orgad10c28"><span class="section-number-2">1.</span> Introduction</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Excel uses a scripting language to create its macros, it lives inside VBA and the execution is reserved to Office software. The code can be written in any other editor but Excel has a Development Environment that supports running the scripts directly inside it and they afftect the current work sheet.
@@ -113,12 +113,12 @@ We can access cells with the <code>Cells</code> keyword or using <code>Range</co
 </div>
 </div>
 
-<div id="outline-container-orgff34453" class="outline-2">
-<h2 id="orgff34453"><span class="section-number-2">2.</span> Reference</h2>
+<div id="outline-container-org394c6e8" class="outline-2">
+<h2 id="org394c6e8"><span class="section-number-2">2.</span> Reference</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-org0dd1a6a" class="outline-3">
-<h3 id="org0dd1a6a"><span class="section-number-3">2.1.</span> Subroutine Declaration</h3>
+<div id="outline-container-org9732717" class="outline-3">
+<h3 id="org9732717"><span class="section-number-3">2.1.</span> Subroutine Declaration</h3>
 <div class="outline-text-3" id="text-2-1">
 <div class="org-src-container">
 <pre class="src src-java"><span style="color: #33CCAA;">Sub</span> <span style="color: #DDDDAA;">MySubroutine</span><span style="color: #CC88CC;">()</span>
@@ -129,8 +129,8 @@ End Sub
 </div>
 </div>
 
-<div id="outline-container-org99220e6" class="outline-3">
-<h3 id="org99220e6"><span class="section-number-3">2.2.</span> Variable Declaration</h3>
+<div id="outline-container-org73152b9" class="outline-3">
+<h3 id="org73152b9"><span class="section-number-3">2.2.</span> Variable Declaration</h3>
 <div class="outline-text-3" id="text-2-2">
 <div class="org-src-container">
 <pre class="src src-java">Dim my_number <span style="color: #33CCAA;">As</span> <span style="color: #a9dbfa;">Integer</span>
@@ -139,8 +139,8 @@ End Sub
 </div>
 </div>
 
-<div id="outline-container-orga698558" class="outline-3">
-<h3 id="orga698558"><span class="section-number-3">2.3.</span> Data Types</h3>
+<div id="outline-container-orgffc9007" class="outline-3">
+<h3 id="orgffc9007"><span class="section-number-3">2.3.</span> Data Types</h3>
 <div class="outline-text-3" id="text-2-3">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -224,8 +224,8 @@ End Sub
 </div>
 </div>
 
-<div id="outline-container-orga40ebc9" class="outline-3">
-<h3 id="orga40ebc9"><span class="section-number-3">2.4.</span> Object Types</h3>
+<div id="outline-container-orgb001174" class="outline-3">
+<h3 id="orgb001174"><span class="section-number-3">2.4.</span> Object Types</h3>
 <div class="outline-text-3" id="text-2-4">
 <p>
 The <code>object</code> type can point to data of any type, can be used as generic type for whenever you don&rsquo;t know the type of the variable it may point to.
@@ -242,8 +242,8 @@ The <code>object</code> type can point to data of any type, can be used as gener
 </div>
 </div>
 
-<div id="outline-container-org2f650ba" class="outline-3">
-<h3 id="org2f650ba"><span class="section-number-3">2.5.</span> Arrays</h3>
+<div id="outline-container-org6269b32" class="outline-3">
+<h3 id="org6269b32"><span class="section-number-3">2.5.</span> Arrays</h3>
 <div class="outline-text-3" id="text-2-5">
 <p>
 Arrays hold an arbitrary number of variables of the same type. Instead of creating many variables that share a type, we can create an array.
@@ -273,8 +273,8 @@ tickers<span style="color: #CC88CC;">(</span><span style="color: #BBCCAA; font-w
 </div>
 </div>
 
-<div id="outline-container-org0438c70" class="outline-3">
-<h3 id="org0438c70"><span class="section-number-3">2.6.</span> Strings</h3>
+<div id="outline-container-org876fbd1" class="outline-3">
+<h3 id="org876fbd1"><span class="section-number-3">2.6.</span> Strings</h3>
 <div class="outline-text-3" id="text-2-6">
 <p>
 Concatenating strings.
@@ -295,16 +295,16 @@ Printing formatted strings.
 </div>
 </div>
 
-<div id="outline-container-org1311e8a" class="outline-2">
-<h2 id="org1311e8a"><span class="section-number-2">3.</span> Keywords and Operators</h2>
+<div id="outline-container-org550e6ce" class="outline-2">
+<h2 id="org550e6ce"><span class="section-number-2">3.</span> Keywords and Operators</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Here is some syntax reference for the common keywords in VBA:
 </p>
 </div>
 
-<div id="outline-container-orgadce8bd" class="outline-3">
-<h3 id="orgadce8bd"><span class="section-number-3">3.1.</span> Conditional</h3>
+<div id="outline-container-orgcdb3b93" class="outline-3">
+<h3 id="orgcdb3b93"><span class="section-number-3">3.1.</span> Conditional</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 If, Then.
@@ -362,8 +362,8 @@ End If
 </div>
 
 
-<div id="outline-container-orgd90a8e6" class="outline-3">
-<h3 id="orgd90a8e6"><span class="section-number-3">3.2.</span> Loops</h3>
+<div id="outline-container-orgb5cbe44" class="outline-3">
+<h3 id="orgb5cbe44"><span class="section-number-3">3.2.</span> Loops</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 For loop.
@@ -401,8 +401,8 @@ Next i
 </div>
 </div>
 
-<div id="outline-container-orgc7d5313" class="outline-3">
-<h3 id="orgc7d5313"><span class="section-number-3">3.3.</span> Visual Style Formatting</h3>
+<div id="outline-container-org332f90b" class="outline-3">
+<h3 id="org332f90b"><span class="section-number-3">3.3.</span> Visual Style Formatting</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 Styling.
@@ -466,8 +466,8 @@ Cells<span style="color: #CC88CC;">(</span><span style="color: #BBCCAA; font-wei
 </div>
 
 
-<div id="outline-container-orgc8a9e1d" class="outline-2">
-<h2 id="orgc8a9e1d"><span class="section-number-2">4.</span> Design Patterns</h2>
+<div id="outline-container-org99d5b8e" class="outline-2">
+<h2 id="org99d5b8e"><span class="section-number-2">4.</span> Design Patterns</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 Patterns can be expressed as pseudocode, which means that we are only describing what the process looks like once we generalize it.
@@ -545,8 +545,8 @@ Once our design is solid, we can reuse the code in other applications as long as
 </div>
 
 
-<div id="outline-container-orgd95be0c" class="outline-2">
-<h2 id="orgd95be0c"><span class="section-number-2">5.</span> Doing Research</h2>
+<div id="outline-container-org545ca37" class="outline-2">
+<h2 id="org545ca37"><span class="section-number-2">5.</span> Doing Research</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 Another way to improve our design patterns is to look for answers that other people have come up with or simply look at the documentation for a better understanding of the features and rules of the programming language.
@@ -567,8 +567,8 @@ We can refer to Microsoft&rsquo;s documentation <sup><a id="fnr.1.100" class="fo
 </div>
 
 
-<div id="outline-container-org0b1b164" class="outline-2">
-<h2 id="org0b1b164"><span class="section-number-2">6.</span> Developing a Macro</h2>
+<div id="outline-container-org159456a" class="outline-2">
+<h2 id="org159456a"><span class="section-number-2">6.</span> Developing a Macro</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 In order to create a proper algorithm/design, we will map out a plan of what we need to execute. Let&rsquo;s write down the an example of a general objective and then go step by step:
@@ -602,8 +602,8 @@ Cells<span style="color: #CC88CC;">(</span><span style="color: #BBCCAA; font-wei
 </div>
 </div>
 
-<div id="outline-container-orga077708" class="outline-2">
-<h2 id="orga077708"><span class="section-number-2">7.</span> Running Macros with Buttons</h2>
+<div id="outline-container-org001d7c3" class="outline-2">
+<h2 id="org001d7c3"><span class="section-number-2">7.</span> Running Macros with Buttons</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 Go to <code>Developer=&gt;Button=&gt;Select Area in worksheet=&gt;Select your Macro</code>.
@@ -620,8 +620,8 @@ Using user input.
 </div>
 </div>
 
-<div id="outline-container-org0b94e15" class="outline-2">
-<h2 id="org0b94e15"><span class="section-number-2">8.</span> Debugging and Timing Code</h2>
+<div id="outline-container-org22df511" class="outline-2">
+<h2 id="org22df511"><span class="section-number-2">8.</span> Debugging and Timing Code</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 It&rsquo;s a good idea to execute the macro everytime we complete a step and even make a commit to our repository to keep track of our progress and versions of our code.
@@ -669,7 +669,7 @@ Performance will become much more key when working with larger datasets or perfo
 </div></div>
 <div id="postamble" class="status">
 <p class="author">Author: Alberto Valdez</p>
-<p class="date">Created: 2022-07-14 Thu 15:34</p>
+<p class="date">Created: 2022-07-14 Thu 22:55</p>
 </div>
 </body>
 </html>
