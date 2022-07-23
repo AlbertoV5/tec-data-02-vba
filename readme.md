@@ -1,334 +1,137 @@
-|                                                           |                          |                          |                                      |
-|---------------------------------------------------------- |------------------------- |------------------------- |------------------------------------- |
-| [<<<Home](https://albertov5.github.io/tec-data/index.html) | [Lesson-1](./lesson-1.md) | [Lesson-2](./lesson-2.md) | [Challenge>>>](./challenge/readme.md) |
+|                       |
+|---------------------- |
+| [<<Back](../readme.md) |
 
 
-# Introduction
+# Overview
 
-Excel uses a scripting language to create its macros, it lives inside VBA and the execution is reserved to Office software. The code can be written in any other editor but Excel has a Development Environment that supports running the scripts directly inside it and they afftect the current work sheet.
+During this module, we managed to automate various basic Excel tasks using Visual Basic for Applications. The most important part of the process was that we managed to do it without focusing too much on the scripting language but rather the problems we wanted to solve.
 
-Macros are Subroutines (`Sub`) that can be called by name from the spreadsheet after enabling macros. This is an example of a macro that will print out the values in Cells (1, 1) to (1, 8).
+Now that the mission is accomplished and the code works, we venture into optimization in order to make sure our code can cover more cases, particularly those cases where we have to work with data orders of magnitude bigger.
 
-```java
-Sub DQAnalysis()
-    Worksheets("DQ Analysis").Activate
 
-    Range("A1").Value = "DAQO (Ticker: DQ)"
+# Results
 
-    'Create a header row
-    Cells(3, 1).Value = "Year"
-    Cells(3, 2).Value = "Total Daily Volume"
-    Cells(3, 3).Value = "Return"
+Our initial code took about `0.66` seconds to run in both spreadsheets.
 
-    Worksheets("2018").Activate
-    For i = 1 To 8
-        MsgBox (Cells(1, i))
+Initial, unoptimized code.
 
-    Next i
+<img src="./resources/VBA_Unoptimized_2017.png" alt="Unoptimized 2017" width="500">
 
-End Sub
-```
+<img src="./resources/VBA_Unoptimized_2018.png" alt="Unoptimized 2018" width="500">
+<p></p>
 
-*Note: I haven&rsquo;t found support for vba syntax highlight so I&rsquo;m telling the source block it&rsquo;s java code just for the colors.*
+The main problem with that version is that in had both conditional and nested loops that weren&rsquo;t completely necessary.
 
-We can access cells with the `Cells` keyword or using `Range`. We can always reference the existing methods and properties in Microsoft&rsquo;s website <sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup>.
 
+## Original Code
 
-# Reference
-
-
-## Subroutine Declaration
-
-```java
-Sub MySubroutine()
-    'code goes here
-End Sub
-```
-
-
-## Variable Declaration
-
-```java
-Dim my_number As Integer
-```
-
-
-## Data Types
-
-| Type             | Size in Memory | Range of Values                                       |
-|---------------- |-------------- |----------------------------------------------------- |
-| Byte             | 1 Byte         | 0 to 255                                              |
-| Integer          | 2 Bytes        | -32,768 to 32767                                      |
-| Single           | 4 Bytes        | -3.4E38 to 3.4E38                                     |
-| Long             | 8 Bytes        | -2,147,483,648 to 2,147,483,648                       |
-| Date             | 8 Bytes        | January 1, 100 to December 31, 999                    |
-| Currency         | 8 Bytes        | -922,337,203,685,477.5808 to 922,337,203,685,477.5807 |
-| String (dynamic) | 10 Bytes       | 0 to 2 billion characters                             |
-| String (fixed)   | string length  | 1 to approximately 65,400                             |
-| Boolean          | 4 Bytes        | True or False                                         |
-| Object           | 4 Bytes        | Object in VBA                                         |
-
-
-## Object Types
-
-The `object` type can point to data of any type, can be used as generic type for whenever you don&rsquo;t know the type of the variable it may point to.
-
-```java
-Dim my_object As Object
-```
-
-`Object` does not contain the data value itself, as it&rsquo;s a pointer to that value. <sup><a id="fnr.2" class="footref" href="#fn.2" role="doc-backlink">2</a></sup> So it always uses the same space in memory. It&rsquo;s recommended to always define a variable by a specific type rather than trying to point to it at runtime.
-
-
-## Arrays
-
-Arrays hold an arbitrary number of variables of the same type. Instead of creating many variables that share a type, we can create an array.
-
-We index arrays with an integer `i`. Arrays in VBA are zero-based.
-
-Declaring arrays.
-
-```java
-Dim tickers(11) As String
-```
-
-Accessing arrays.
-
-```java
-tickers(0) = "AY"
-tickers(1) = "CSIQ"
-tickers(2) = "DQ"
-```
-
-
-## Strings
-
-Concatenating strings.
-
-```java
-Range("A1").Value = "All Stocks (" + yearValue + ")"
-```
-
-Printing formatted strings.
-
-```java
-MsgBox "This code ran in " & (endTime - startTime) & " seconds for the year " & (yearValue)
-```
-
-
-# Keywords and Operators
-
-Here is some syntax reference for the common keywords in VBA:
-
-
-## Conditional
-
-If, Then.
-
-```java
-If 3 > 2 Then
-    ' Code here
-End If
-```
-
-Equal operator.
-
-```java
-Cells(i, 1).Value = "DQ"
-```
-
-Not equal operator.
-
-```java
-Cells(i - 1, 1).Value <> "DQ"
-```
-
-And keyword.
-
-```java
-If Cells(i, 1).Value = "DQ" And Cells(i - 1, 1).Value <> "DQ" Then
-    'set starting price
-End If
-```
-
-ElseIf.
-
-```java
-If Cells(4, 3) > 0 Then
-    'Color the cell green
-    Cells(4, 3).Interior.Color = vbGreen
-ElseIf Cells(4, 3) < 0 Then
-    'Color the cell red
-    Cells(4, 3).Interior.Color = vbRed
-Else
-    'Clear the cell color
-    Cells(4, 3).Interior.Color = xlNone
-End If
-```
-
-
-## Loops
-
-For loop.
-
-```java
-For i = 1 To 10
-    ' Code here
-Next i
-```
-
-Nested loops.
-
-```java
-For i = 1 To 10
-    ' code here
-    For j = 1 to 20
-        ' code here
-    Next j
-Next i
-```
-
-Accessing arrays in loops.
+This is how our main loop looked initially.
 
 ```java
 For i = 0 To 11
     ticker = tickers(i)
-    ' Do stuff with ticker
+    totalVolume = 0
+    Worksheets("2018").Activate
+    For j = 2 To RowCount
+        If Cells(j, 1).Value = ticker Then
+            totalVolume = totalVolume + Cells(j, 8).Value
+        End If
+        If Cells(j - 1, 1).Value <> ticker And Cells(j, 1).Value = ticker Then
+            startingPrice = Cells(j, 6).Value
+        End If
+        If Cells(j + 1, 1).Value <> ticker And Cells(j, 1).Value = ticker Then
+            endingPrice = Cells(j, 6).Value
+        End If
+    Next j
+    Worksheets("All Stocks Analysis").Activate
+    Cells(4 + i, 1).Value = ticker
+    Cells(4 + i, 2).Value = totalVolume
+    Cells(4 + i, 3).Value = endingPrice / startingPrice - 1
 Next i
 ```
 
+1.  The outer loop in this case is not necessary as we can initialize a different counter that is updated during the inner loop.
+2.  There are too many single `If-Then` conditionals, it is better to reduce them.
+3.  We can move the outer loop to a separate process so we don&rsquo;t have to call `Worksheets("").Activate` every time.
+4.  Having separate loops can improve readability and help us find bugs easily.
 
-## Visual Style Formatting
 
-Styling.
+## Refactored Code
 
-```java
-Range("A3:C3").Font.Bold = True
-Columns("B").AutoFit
-```
-
-Number Formatting.
+This is how the main loop looks after refactoring it.
 
 ```java
-Range("B4:B15").NumberFormat = "#,##0"
-Range("C4:C15").NumberFormat = "0.0%"
+For i = startIndex To RowCount
+    tickerVolumes(tickerIndex) = tickerVolumes(tickerIndex) + Cells(i, 8).Value
+    If Cells(i, 1).Value <> Cells(i - 1, 1).Value Then
+        tickerStartingPrices(tickerIndex) = Cells(i, 6).Value
+    End If
+    If Cells(i, 1).Value <> Cells(i + 1, 1).Value Then
+        tickerEndingPrices(tickerIndex) = Cells(i, 6).Value
+        tickerIndex = tickerIndex + 1
+    End If
+Next i
 ```
 
-Digits of Precision.
-
-| Format              | Precision  |
-|------------------- |---------- |
-| &ldquo;0.0%&rdquo;  | one digit  |
-| &ldquo;0.00%&rdquo; | two digits |
-
-Colors.
+Of course we moved half of the process to another loop, but this helps us a lot when reading it even without comments. Here is the second part of the process.
 
 ```java
-Cells(4, 3).Interior.Color = vbGreen
-Cells(4, 3).Interior.Color = vbRed
-Cells(4, 3).Interior.Color = xlNone
+For i = 0 To 11
+    Worksheets("All Stocks Analysis").Activate
+    Cells(4 + i, 2).Value = tickerVolumes(i)
+    Cells(4 + i, 3).Value = tickerEndingPrices(i) / tickerStartingPrices(i) - 1
+Next i
 ```
 
-
-# Design Patterns
-
-Patterns can be expressed as pseudocode, which means that we are only describing what the process looks like once we generalize it.
-
-A good way to find them is to create a few cases by hand first and see if a pattern arises once we see them side by side. For example:
-
-| Cases  | input | output |
-|------ |----- |------ |
-| Case 1 | 1     | 4      |
-| Case 2 | 2     | 2      |
-| Case 3 | 3     | 1.25   |
-| Case 4 | 4     | 1      |
-
-We can then assume that our output will be `output = 4/input`. So the pattern will be:
-
-```java
-Sub DivBy4()
-    For i = 1 To 10
-        Cells(i, 2).Value = 4 / Cells(i, 1).Value
-    Next i
-End Sub
-```
-
-The code will give us the result of any input we give it. So the value of cell 2 will be equal to 4 divided by the value of cell 1. This way we can operate in any number of cases. It&rsquo;s good to always test for outlier cases as our design needs to cover them too. For example, `we have to check that the input is not zero`.
-
-Once our design is solid, we can reuse the code in other applications as long as it fits them. The more cases it can cover, the better.
+> Flat is better than nested. -Tim Peters.
 
 
-# Doing Research
+## Conclusions
 
-Another way to improve our design patterns is to look for answers that other people have come up with or simply look at the documentation for a better understanding of the features and rules of the programming language.
+Here are the measurements after the code was refactored.
 
-For example, we wouldn&rsquo;t be able to know what `xlUp` does without looking at the documentation or getting that information from a quick google search.
+<img src="./resources/VBA_Challenge_2017.png" alt="optimized 2017" width="500">
 
-```java
-rowEnd = Cells(Rows.Count, "A").End(xlUp).Row
-```
+<img src="./resources/VBA_Challenge_2018.png" alt="optimized 2018" width="500">
+<p></p>
 
-We can refer to Microsoft&rsquo;s documentation <sup><a id="fnr.1.100" class="footref" href="#fn.1" role="doc-backlink">1</a></sup> for more information about VBA.
+| Year | Before | After |
+|---- |------ |----- |
+| 2017 | 0.65   | 0.12  |
+| 2018 | 0.66   | 0.14  |
 
-
-# Developing a Macro
-
-In order to create a proper algorithm/design, we will map out a plan of what we need to execute. Let&rsquo;s write down the an example of a general objective and then go step by step:
-
-1.  Format our working sheet with headers.
-2.  Initialize an array of existing items.
-3.  Initialize variables based on our data.
-4.  Initialize output variables with no value yet.
-5.  Loop through our data.
-6.  Write down the results
-
-We have to translate that pseudocode into actual code, so now we go step by step. For the sake of simplicity, we will only visit the first step:
-
-1.  Format our working sheet with headers:
-
-```java
-Worksheets("All Stocks Analysis").Activate
-Range("A1").Value = "All Stocks (2018)"
-
-Cells(3, 1).Value = "Ticker"
-Cells(3, 2).Value = "Total Daily Volume"
-Cells(3, 3).Value = "Return"
-```
+Which means that the code runs about `5.5` times faster. Imagine telling a client `"I'll get back to you in 1 business day"` against telling them `"I'll get back to you in a week"`. Of course that is a dramatic example but it matters.
 
 
-# Running Macros with Buttons
+# Summary
 
-Go to `Developer=>Button=>Select Area in worksheet=>Select your Macro`. Then you can edit your button name, look and feel, and then test it by clicking it.
+Being able to refactor code means a few different things:
 
-Using user input.
-
-```java
-yearValue = InputBox("What year would you like to run the analysis on?")
-```
+1.  The person refactoring the code may not be the same who wrote it, so comments and readability are important.
+2.  We can get an initial result and solve a our problems at hand with a first version of the code but if we want to be able to solve more problems, we can always refactor to make it sure we can solve those problems too. As long as they remains within the code design.
+3.  We can spend more time in data analysis instead of coding or waiting for results. If we manage to get good code and good performance, we will have one less thing to worry about.
 
 
-# Debugging and Timing Code
+## Cons of refactoring code:
 
-It&rsquo;s a good idea to execute the macro everytime we complete a step and even make a commit to our repository to keep track of our progress and versions of our code.
+1.  If the original design is too flawed we may spend we may spend too much time trying to figure out what the original coder intended, so we may be better off making our own script.
+2.  We may find ourselves surrounded by a lot of special cases that the original script didn&rsquo;t intent to cover and we may complicate things further if we start adding complexity to the design.
 
-Luckily, Excel can help us find problems in our code with its debugging tools. It&rsquo;s also not a bad idea to `google` the error messages to see possible solutions in case we don&rsquo;t see it right away.
 
-Measuring timing.
+## Pros of refactoring code:
 
-```java
-Dim startTime, endTime As Single
-startTime = Timer
-' Code here
-endTime = Timer
-totalTime = endTime - startTime
-```
+1.  Refactoring can include using code from a completely different project but that fits the patterns of our problem at hand, so in that case is valid to reuse code and gain some time in the coding process.
+2.  As long as the scripting language allows it, we can be sure that the code will last for many years as if something out of our control changes like a database or a functionality in Excel, we can refactor our code to fit that new requirement. In case of other languages, we can also include new libraries or technologies that will improve our code performance without needing to change the logic of it.
 
-Performance will become much more key when working with larger datasets or performing more complex operations like machine learning. Other useful tool is profiling. <sup><a id="fnr.3" class="footref" href="#fn.3" role="doc-backlink">3</a></sup>
 
-## Footnotes
+# Closing Thoughts
 
-<sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <https://docs.microsoft.com/en-us/office/vba/api/overview/excel/graph-visual-basic-reference>
+Just as completition of the data analysis, I include a short table of the partial results of the data. Ideally we could create more macros to keep adding years in a sequential way like this and it will only take a few seconds to keep organizing the data in ways we can get a much clearer picture of it.
 
-<sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <https://en.wikipediarg/wiki/Pointer_(computer_programming)>
-
-<sup><a id="fn.3" class="footnum" href="#fnr.3">3</a></sup> <https://en.wikipedia.org/wiki/Profiling_(computer_programming)>
+| Ticker | Return 2017 | Return 2018 | Change  |
+|------ |----------- |----------- |------- |
+| AY     | 8.9%        | -7.3%       | -16.2%  |
+| CSIQ   | 33.1%       | -16.3%      | -49.4%  |
+| DQ     | 199.4%      | -62.6%      | -262.0% |
+| ENPH   | 129.5%      | 81.9%       | -47.6%  |
